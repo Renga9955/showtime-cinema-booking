@@ -1,4 +1,5 @@
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL =
+  process.env.REACT_APP_BACKEND_URL || "http://localhost:4000";
 
 const DAYS_OF_WEEK = [
   "Monday",

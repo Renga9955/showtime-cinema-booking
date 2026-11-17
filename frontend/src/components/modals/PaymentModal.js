@@ -10,7 +10,7 @@ const PaymentModal = props => {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Bezahlung</Modal.Title>
+          <Modal.Title>Payment</Modal.Title>
         </Modal.Header>
         <Modal.Body>
             <Payment cart={props.cart} />

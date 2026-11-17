@@ -19,7 +19,7 @@ const Account = (props) => {
         if (res.status !== 200) return;
         saveUser(res.user);
         createMessage({
-          text: "Änderungen wurden gespeichert ",
+          text: "Changes have been saved",
           variant: "success",
         });
       });
@@ -28,7 +28,7 @@ const Account = (props) => {
   return (
     <Container>
       <Content className={styles.content}>
-        <h1>Account bearbeiten</h1>
+        <h1>Edit Account</h1>
         <hr />
         <RegisterForm
           user={user}

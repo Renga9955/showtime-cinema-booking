@@ -32,7 +32,7 @@ const Movies = (props) => {
         )
       );
     });
-  }, []);
+  }, [fetchPage]);
 
   const onDeleteMovie = (movie) => {
     setDeleteMovie(movie);
@@ -45,7 +45,7 @@ const Movies = (props) => {
       if (res.status !== 200) return;
       setShowDeleteModal(false);
       createMessage({
-        text: "Film wurde erfolgreich gelöscht ",
+        text: "Movie was successfully deleted",
         variant: "success",
       });
       setMovies((prev) => {
@@ -60,10 +60,10 @@ const Movies = (props) => {
       <Container>
         <Content className={styles.content} style={{minHeight: "70vh"}}>
           <div className={styles.header}>
-            <h1>Filme Verwalten</h1>
+            <h1>Manage Movies</h1>
             <hr />
             <Link to="/admin/movies/new">
-              <MainButton className="mb-4">Neu Film hinzufügen</MainButton>
+              <MainButton className="mb-4">Add new movie</MainButton>
             </Link>
           </div>
           {isFetchingPage && <LoadingSpinner />}
@@ -74,7 +74,7 @@ const Movies = (props) => {
               )}
               {movies.length <= 0 && (
                 <h2 className="text-muted text-center">
-                  Keine Filme vorhanden
+                  No movies available
                 </h2>
               )}
             </>
@@ -84,7 +84,7 @@ const Movies = (props) => {
       <DeleteModal
         show={showDeleteModal}
         title={deleteMovie?.title}
-        text="Wollen Sie wirklich den Film löschen?"
+        text="Are you sure you want to delete this movie?"
         onClose={() => setShowDeleteModal(false)}
         onDelete={deleteMovieHandler}
         isLoading={isFetching}

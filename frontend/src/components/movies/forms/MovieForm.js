@@ -190,64 +190,64 @@ const MovieForm = (props) => {
     <Card className={classes}>
       <Form onSubmit={submitHandler}>
         <Form.Group className="mb-3" controlId="title">
-          <Form.Label>Titel</Form.Label>
+          <Form.Label>Title</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Titel eingeben..."
+            placeholder="Enter title..."
             onChange={(e) => setTitle(e.target.value)}
             value={title}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="subtitle">
-          <Form.Label>Subtitel</Form.Label>
+          <Form.Label>Subtitle</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Subtitel eingeben..."
+            placeholder="Enter subtitle..."
             onChange={(e) => setSubtitle(e.target.value)}
             value={subtitle}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="originalTitle">
-          <Form.Label>Original Titel</Form.Label>
+          <Form.Label>Original Title</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Original Titel eingeben..."
+            placeholder="Enter original title..."
             onChange={(e) => setOriginalTitle(e.target.value)}
             value={originalTitle}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="runtime">
-          <Form.Label>Laufzeit (min)</Form.Label>
+          <Form.Label>Runtime (min)</Form.Label>
           <Form.Control
             type="number"
-            placeholder="Laufzeit eingeben (Minuten)..."
+            placeholder="Enter runtime (minutes)..."
             onChange={(e) => setRuntime(e.target.value)}
             value={runtime}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="productionCountry">
-          <Form.Label>Produktionsland</Form.Label>
+          <Form.Label>Production Country</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Produktionsland eingeben..."
+            placeholder="Enter production country..."
             onChange={(e) => setProductionCountry(e.target.value)}
             value={productionCountry}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="productionYear">
-          <Form.Label>Produktionjahr</Form.Label>
+          <Form.Label>Production Year</Form.Label>
           <Form.Control
             type="number"
-            placeholder="Jahr eingeben..."
+            placeholder="Enter year..."
             onChange={(e) => setProductionYear(e.target.value)}
             value={productionYear}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="ageRestriction">
-          <Form.Label>Altersfreigabe</Form.Label>
+          <Form.Label>Age Rating</Form.Label>
           <Form.Control
             type="number"
-            placeholder="Altersfreigabe eingeben..."
+            placeholder="Enter age rating..."
             onChange={(e) => setAgeRestriction(e.target.value)}
             value={ageRestriction}
           />
@@ -256,7 +256,7 @@ const MovieForm = (props) => {
           <Form.Label>Poster</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Bild URL eingeben..."
+            placeholder="Enter image URL..."
             onChange={(e) => setPoster(e.target.value)}
             value={poster}
           />
@@ -265,18 +265,18 @@ const MovieForm = (props) => {
           <Form.Label>Trailer</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Youtube-Video Key eingeben..."
+            placeholder="Enter YouTube video key..."
             onChange={(e) => setTrailer(e.target.value)}
             value={trailer}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="description">
-          <Form.Label>Beschreibung</Form.Label>
+          <Form.Label>Description</Form.Label>
           <textarea
             className="form-control"
             id="description"
             rows="4"
-            placeholder="Beschreibung eingeben..."
+            placeholder="Enter description..."
             onChange={(e) => setDescription(e.target.value)}
             value={description}
           ></textarea>
@@ -286,11 +286,11 @@ const MovieForm = (props) => {
           <div className={styles.inputButtonGroup}>
             <Form.Control
               type="text"
-              placeholder="Genre eingeben..."
+              placeholder="Enter genre..."
               onChange={(e) => setGenreInput(e.target.value)}
               value={genreInput}
             />
-            <Button onClick={addGenreHandler}>Hinzufügen</Button>
+            <Button onClick={addGenreHandler}>Add</Button>
           </div>
 
           <motion.div className={styles.badgeContainer}>
@@ -302,30 +302,30 @@ const MovieForm = (props) => {
           <div className={styles.inputButtonGroup}>
             <Form.Control
               type="text"
-              placeholder="Keyword eingeben..."
+              placeholder="Enter keyword..."
               onChange={(e) => setKeywordInput(e.target.value)}
               value={keywordInput}
             />
-            <Button onClick={addKeywordHandler}>Hinzufügen</Button>
+            <Button onClick={addKeywordHandler}>Add</Button>
           </div>
           <motion.div className={styles.badgeContainer}>
             <AnimatePresence>{keywordsElements}</AnimatePresence>
           </motion.div>
         </Form.Group>
         <Form.Group className="mb-3" controlId="director">
-          <Form.Label>Regie</Form.Label>
+          <Form.Label>Director</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Regie eingeben..."
+            placeholder="Enter director..."
             onChange={(e) => setDirector(e.target.value)}
             value={director}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="screenwriter">
-          <Form.Label>Drehbuch</Form.Label>
+          <Form.Label>Screenplay</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Drehbuch eingeben..."
+            placeholder="Enter screenplay..."
             onChange={(e) => setScreenwriter(e.target.value)}
             value={screenwriter}
           />
@@ -335,13 +335,13 @@ const MovieForm = (props) => {
           <div className="d-flex gap-2 mb-2">
             <Form.Control
               type="text"
-              placeholder="Schauspieler eingeben..."
+              placeholder="Enter actor..."
               onChange={(e) => setCastNameInput(e.target.value)}
               value={castNameInput}
             />
             <Form.Control
               type="text"
-              placeholder="Charakter eingeben..."
+              placeholder="Enter character..."
               onChange={(e) => setCastCharacterInput(e.target.value)}
               value={castCharacterInput}
             />
@@ -349,11 +349,11 @@ const MovieForm = (props) => {
           <div className={styles.inputButtonGroup}>
             <Form.Control
               type="text"
-              placeholder="Bild URL eingeben..."
+              placeholder="Enter image URL..."
               onChange={(e) => setCastImageInput(e.target.value)}
               value={castImageInput}
             />
-            <Button onClick={addCastHandler}>Hinzufügen</Button>
+            <Button onClick={addCastHandler}>Add</Button>
           </div>
           <HorizontalScrollContainer>{castElements}</HorizontalScrollContainer>
         </Form.Group>
@@ -363,7 +363,7 @@ const MovieForm = (props) => {
           type="submit"
           isLoading={props.isLoading}
         >
-          {isNew ? "Erstellen" : "Aktualisieren"}
+          {isNew ? "Create" : "Update"}
         </LoadingButton>
       </Form>
     </Card>

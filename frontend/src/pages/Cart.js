@@ -50,14 +50,15 @@ const Cart = (props) => {
   const loginSubmitHandler = async (user) => {
     setError();
     setIsFetching(true);
-    await login(user.username, user.password).then((success) => {
+    await login(user.username, user.password).then((res) => {
       setIsFetching(false);
-      if (!success) {
-        setError("Login fehlgeschlagen");
+      const isSuccess = res === true || res?.success;
+      if (!isSuccess) {
+        setError(res?.message || "Login failed");
         return;
       } else {
         createMessage({
-          text: "Erfolgreich eingeloggt",
+          text: "Successfully logged in",
           variant: "success",
         });
       }
@@ -83,28 +84,28 @@ const Cart = (props) => {
   const guestForm = (
     <Form className="pt-3">
       <Form.Group className="mb-3" controlId="guestFirstName">
-        <Form.Label>Vorname</Form.Label>
+        <Form.Label>First Name</Form.Label>
         <Form.Control
           type="text"
-          placeholder="Vorname eingeben..."
+          placeholder="Enter first name..."
           onChange={(ev) => setGuestFirstName(ev.target.value)}
           value={guestFirstName}
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="guestLastName">
-        <Form.Label>Nachname</Form.Label>
+        <Form.Label>Last Name</Form.Label>
         <Form.Control
           type="text"
-          placeholder="Nachname eingeben..."
+          placeholder="Enter last name..."
           onChange={(ev) => setGuestLastName(ev.target.value)}
           value={guestLastName}
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="guestEmail">
-        <Form.Label>E-Mail</Form.Label>
+        <Form.Label>Email</Form.Label>
         <Form.Control
           type="email"
-          placeholder="E-Mail eingeben..."
+          placeholder="Enter email..."
           onChange={(ev) => setGuestMail(ev.target.value)}
           value={guestMail}
         />
@@ -120,7 +121,7 @@ const Cart = (props) => {
           {loadingPage && <LoadingSpinner />}
           {!loadingPage && (
             <>
-              <h1 className={styles.title}>Warenkorb</h1>
+              <h1 className={styles.title}>Cart</h1>
               {cart ? (
                 <>
                   <section className={styles.header}>
@@ -137,16 +138,16 @@ const Cart = (props) => {
                         {cart.screening.scheduledScreening.cinema.title}
                       </h3>
                       <h4 className="mt-1">
-                        {new Date(cart.screening.date).toLocaleString("de-de", {
+                        {new Date(cart.screening.date).toLocaleString("en-US", {
                           weekday: "long",
                         })}
                       </h4>
                       <h4>
                         {new Date(cart.screening.date).toLocaleDateString()},{" "}
-                        {cart.screening.scheduledScreening.time} Uhr
+                        {cart.screening.scheduledScreening.time}
                       </h4>
                       <h4 className="mt-1">
-                        Ticketanzahl:{" "}
+                        Tickets:{" "}
                         {cart.tickets.reduce((acc, ticket) => acc + 1, 0)}
                       </h4>
                     </div>
@@ -164,9 +165,8 @@ const Cart = (props) => {
                           <Nav.Item>
                             <Nav.Link
                               eventKey="login"
-                              className={`${styles.link} ${
-                                tab === "login" && styles.activeLink
-                              }`}
+                              className={`${styles.link} ${tab === "login" && styles.activeLink
+                                }`}
                             >
                               Login
                             </Nav.Link>
@@ -174,11 +174,10 @@ const Cart = (props) => {
                           <Nav.Item>
                             <Nav.Link
                               eventKey="guest"
-                              className={`${styles.link} ${
-                                tab === "guest" && styles.activeLink
-                              }`}
+                              className={`${styles.link} ${tab === "guest" && styles.activeLink
+                                }`}
                             >
-                              Gast
+                              Guest
                             </Nav.Link>
                           </Nav.Item>
                         </Nav>
@@ -191,7 +190,7 @@ const Cart = (props) => {
                     <hr className="w-100" />
                     <section className={styles.footer}>
                       <h3 className="mt-3 mb-3 w-100">
-                        Gesamtpreis: {totalPrice}€
+                        Total Price: {totalPrice}€
                       </h3>
                       <MainButton
                         className={styles.payBtn}
@@ -199,14 +198,14 @@ const Cart = (props) => {
                         onClick={paymentHandler}
                       >
                         <CashCoin />
-                        Bezahlen
+                        Checkout
                       </MainButton>
                     </section>
                   </section>
                 </>
               ) : (
                 <h3 className="text-muted text-center mt-3 mb-3">
-                  Warenkorb ist leer
+                  Cart is empty
                 </h3>
               )}
             </>

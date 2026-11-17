@@ -8,7 +8,7 @@ const TicketModal = (props) => {
 
   const seats = ticket?.seats.map((seat, i) => (
     <ListGroupItem key={i}>
-      Reihe: {seat.row} / Platz: {seat.col} [{seat.type.title}]
+      Row: {seat.row} / Seat: {seat.col} [{seat.type.title}]
     </ListGroupItem>
   ));
 
@@ -24,7 +24,7 @@ const TicketModal = (props) => {
             <h2>{ticket.movie.title}</h2>
             <h3>{ticket.cinema}</h3>
             <h3>{new Date(ticket.datetime).toLocaleString()}</h3>
-            <h3 className="mt-4 mb-3">Sitzplätze</h3>
+            <h3 className="mt-4 mb-3">Seats</h3>
             <ListGroupStyled>{seats}</ListGroupStyled>
           </div>
         )}

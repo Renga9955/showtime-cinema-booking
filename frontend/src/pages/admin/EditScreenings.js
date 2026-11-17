@@ -77,7 +77,7 @@ const EditScreenings = (props) => {
       setIsPageLoading(false);
     };
     fetchPage();
-  }, []);
+  }, [fetch]);
 
   const openNewScreening = () => {
     clearErrorMsg();
@@ -89,10 +89,10 @@ const EditScreenings = (props) => {
       <Container>
         <Content className={styles.content} style={{minHeight: "70vh"}}>
           <div className={styles.header}>
-            <h1>Filmvorführungen</h1>
+            <h1>Screenings</h1>
             <hr />
             <MainButton className="mb-3" onClick={openNewScreening}>
-              Hinzufügen
+              Add
             </MainButton>
           </div>
           {isPageLoading && <LoadingSpinner />}
@@ -107,7 +107,7 @@ const EditScreenings = (props) => {
                 />
               ) : (
                 <h2 className="text-muted text-center">
-                  Keine Filmvorführungen vorhanden
+                  No screenings available
                 </h2>
               )}
             </>
@@ -124,8 +124,8 @@ const EditScreenings = (props) => {
       />
       <DeleteModal
         show={showDeleteModal}
-        title="Filmvorführung"
-        text="Wollen Sie wirklich die Filmvorführung löschen?"
+        title="Screening"
+        text="Are you sure you want to delete this screening?"
         onClose={() => setShowDeleteModal(false)}
         onDelete={deleteScreeningHandler}
         isLoading={isFetching}

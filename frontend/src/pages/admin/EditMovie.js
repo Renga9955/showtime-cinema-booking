@@ -24,7 +24,7 @@ const EditMovie = (props) => {
       else setMovie(res.data);
     };
     fetchMovie();
-  }, []);
+  }, [fetchPage, id, navigate]);
 
   const updateMovieHandler = async (updatedMovie) => {
     const res = await fetch.put(
@@ -39,7 +39,7 @@ const EditMovie = (props) => {
         behavior: "smooth",
       });
       createMessage({
-        text: "Film wurde erfolgreich aktualisiert",
+        text: "Movie was successfully updated",
         variant: "success",
       });
     }
@@ -49,7 +49,7 @@ const EditMovie = (props) => {
   return (
     <Container>
       <Content className={styles.content}>
-        <h2>Film Bearbeiten</h2>
+        <h2>Edit Movie</h2>
         {isFetchingPage && <LoadingSpinner />}
         {!isFetchingPage && (
           <MovieConfig

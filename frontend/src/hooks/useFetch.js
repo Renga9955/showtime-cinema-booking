@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback, useMemo, useRef } from "react";
 import useFlash from "./useFlash";
 import useUser from "./useUser";
 
@@ -8,9 +8,15 @@ const useFetch = () => {
   const { createMessage } = useFlash();
   const { removeUser } = useUser();
 
-  const clearErrorMsg = () => setErrorMsg();
+  const createMessageRef = useRef(createMessage);
+  createMessageRef.current = createMessage;
 
-  const request = async (url, options) => {
+  const removeUserRef = useRef(removeUser);
+  removeUserRef.current = removeUser;
+
+  const clearErrorMsg = useCallback(() => setErrorMsg(), []);
+
+  const request = useCallback(async (url, options) => {
     setIsFetching(true);
     setErrorMsg();
     let rtn;
@@ -20,10 +26,10 @@ const useFetch = () => {
       const data = await res.json();
       if (res.status !== 200) setErrorMsg(data.message);
       if (res.status === 401 && data?.tokenExpired) {
-        removeUser();
-        createMessage({
-          header: "Sitzung abgelaufen",
-          text: "Bitte erneut einloggen",
+        removeUserRef.current();
+        createMessageRef.current({
+          header: "Session expired",
+          text: "Please log in again",
           variant: "danger",
         });
       }
@@ -31,76 +37,94 @@ const useFetch = () => {
     } catch (err) {
       rtn = {
         status: res?.status || 400,
-        message: res?.status !== 200 && "Fehler bei der Serveranfrage",
+        message: res?.status !== 200 && "Server request failed",
       };
-      res?.status !== 200 && setErrorMsg("Fehler bei der Serveranfrage");
+      res?.status !== 200 && setErrorMsg("Server request failed");
     }
     setIsFetching(false);
     return rtn;
-  };
+  }, []);
 
-  const get = async (url) => {
-    const res = await request(url, {
-      method: "GET",
-      credentials: "include",
-    });
-    return res;
-  };
+  const get = useCallback(
+    async (url) => {
+      const res = await request(url, {
+        method: "GET",
+        credentials: "include",
+      });
+      return res;
+    },
+    [request]
+  );
 
-  const post = async (url, body) => {
-    const res = await request(url, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
-    return res;
-  };
+  const post = useCallback(
+    async (url, body) => {
+      const res = await request(url, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+      return res;
+    },
+    [request]
+  );
 
-  const put = async (url, body) => {
-    const res = await request(url, {
-      method: "PUT",
-      credentials: "include",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
-    return res;
-  };
+  const put = useCallback(
+    async (url, body) => {
+      const res = await request(url, {
+        method: "PUT",
+        credentials: "include",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+      return res;
+    },
+    [request]
+  );
 
-  const patch = async (url, body) => {
-    const res = await request(url, {
-      method: "PATCH",
-      credentials: "include",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
-    return res;
-  };
+  const patch = useCallback(
+    async (url, body) => {
+      const res = await request(url, {
+        method: "PATCH",
+        credentials: "include",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+      return res;
+    },
+    [request]
+  );
 
-  const deleteRq = async (url, body) => {
-    const res = await request(url, {
-      method: "DELETE",
-      credentials: "include",
-    });
-    return res;
-  };
+  const deleteRq = useCallback(
+    async (url, body) => {
+      const res = await request(url, {
+        method: "DELETE",
+        credentials: "include",
+      });
+      return res;
+    },
+    [request]
+  );
 
-  const fetchRequest = {
-    get,
-    post,
-    put,
-    patch,
-    delete: deleteRq,
-  };
+  const fetchRequest = useMemo(
+    () => ({
+      get,
+      post,
+      put,
+      patch,
+      delete: deleteRq,
+    }),
+    [get, post, put, patch, deleteRq]
+  );
 
   return { fetch: fetchRequest, isFetching, errorMsg, clearErrorMsg };
 };

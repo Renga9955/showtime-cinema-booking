@@ -13,7 +13,7 @@ const NewCinema = () => {
     fetch.post(`${BACKEND_URL}/cinemas`, cinema).then((res) => {
       if (res.status === 200)
         createMessage({
-          text: "Kinosaal wurde erfolgreich erstellt",
+          text: "Cinema hall was successfully created",
           variant: "success",
         });
     });
@@ -22,7 +22,7 @@ const NewCinema = () => {
   return (
     <Container>
       <Content style={{minHeight: "75vh"}}>
-        <h1 className="mb-4">Neuer Kinosaal</h1>
+        <h1 className="mb-4">New Cinema Hall</h1>
         <CinemaConfig
           onSubmit={createCinemaHandler}
           isLoading={isFetching}

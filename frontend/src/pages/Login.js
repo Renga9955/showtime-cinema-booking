@@ -16,10 +16,12 @@ const Login = (props) => {
 
   const submitHandler = async (user) => {
     setIsFetching(true);
-    await login(user.username, user.password).then((success) => {
+    setError(null);
+    await login(user.username, user.password).then((res) => {
       setIsFetching(false);
-      if (!success) {
-        setError("Login fehlgeschlagen");
+      const isSuccess = res === true || res?.success;
+      if (!isSuccess) {
+        setError(res?.message || "Login failed");
         return;
       }
 
@@ -44,7 +46,7 @@ const Login = (props) => {
         />
         <hr />
         <Link to="/register">
-          <Button variant="secondary">Registrieren</Button>
+          <Button variant="secondary">Register</Button>
         </Link>
       </div>
     </Container>

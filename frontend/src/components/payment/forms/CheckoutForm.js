@@ -41,7 +41,7 @@ const CheckoutForm = (props) => {
         type="submit"
         id="submit"
       >
-        Bezahlen
+        Pay
       </LoadingButton>
     </form>
   );

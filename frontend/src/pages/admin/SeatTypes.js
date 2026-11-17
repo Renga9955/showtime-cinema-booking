@@ -25,7 +25,7 @@ const SeatTypes = (props) => {
       if (res.status !== 200) return;
       setTypes(res.data);
     });
-  }, []);
+  }, [fetchPage]);
 
   const addSeatType = () => {
     clearErrorMsg();
@@ -56,7 +56,7 @@ const SeatTypes = (props) => {
         setTypes((prevTypes) => [...prevTypes, res.data]);
         setShowSeatTypeModal(false);
         createMessage({
-          text: "Sitzplatztyp wurde erfolgreich erstellt",
+          text: "Seat type was successfully created",
           variant: "success",
         });
       } else {
@@ -76,7 +76,7 @@ const SeatTypes = (props) => {
         });
         setShowSeatTypeModal(false);
         createMessage({
-          text: "Sitzplatztyp wurde erfolgreich aktualisiert",
+          text: "Seat type was successfully updated",
           variant: "success",
         });
       }
@@ -93,7 +93,7 @@ const SeatTypes = (props) => {
       if (res.status !== 200) return;
       setShowDeleteModal(false);
       createMessage({
-        text: "Sitzplatztyp wurde erfolgreich gelöscht",
+        text: "Seat type was successfully deleted",
         variant: "success",
       });
       setTypes((prevTypes) => [
@@ -108,10 +108,10 @@ const SeatTypes = (props) => {
     <>
       <Container>
         <Content style={{minHeight: "70vh"}}>
-          <h1>Sitzplatz-Typen</h1>
+          <h1>Seat Types</h1>
           <hr />
           <MainButton className="mb-4" onClick={addSeatType}>
-            Neuen Sitzplatztyp hinzufügen
+            Add new seat type
           </MainButton>
           {isFetchingPage && <LoadingSpinner />}
           {!isFetchingPage && (
@@ -125,7 +125,7 @@ const SeatTypes = (props) => {
               )}
               {types.length <= 0 && (
                 <h2 className="text-muted text-center">
-                  Keine Sitzplatz-Typen vorhanden
+                  No seat types available
                 </h2>
               )}
             </>
@@ -144,7 +144,7 @@ const SeatTypes = (props) => {
       <DeleteModal
         show={showDeleteModal}
         title={selectedSeatType?.title}
-        text="Wollen Sie wirklich den Sitzplatz-Typ löschen?"
+        text="Are you sure you want to delete this seat type?"
         onClose={() => setShowDeleteModal(false)}
         onDelete={deleteHandler}
         isLoading={isFetching}

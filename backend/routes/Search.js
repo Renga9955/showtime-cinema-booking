@@ -16,23 +16,25 @@ router.get("/movie", async (req, res) => {
     const tmdbUrlSearch = `${TMDB_URL}/search/movie?api_key=${TMDB_KEY}`;
     const resSearch = await fetch(`${tmdbUrlSearch}&query=${name}`);
     if (resSearch.status !== 200)
-      return res.status(404).json({ message: "Film nicht gefunden" });
+      return res.status(404).json({ message: "Movie not found" });
 
     const dataSearch = await resSearch.json();
     if (!dataSearch || dataSearch?.results?.length <= 0)
-      return res.status(404).json({ message: "Film nicht gefunden" });
+      return res.status(404).json({ message: "Movie not found" });
 
     const movieID = dataSearch.results[0].id;
     const queryParams =
-      "language=de&append_to_response=videos,images,credits,keywords,release_dates";
+      "language=en-US&append_to_response=videos,images,credits,keywords,release_dates";
     const tmdbUrlMovie = `${TMDB_URL}/movie/${movieID}?api_key=${TMDB_KEY}&${queryParams}`;
     const resMovie = await fetch(tmdbUrlMovie);
     const dataMovie = await resMovie.json();
     console.log(dataMovie);
 
-    const releaseDate = dataMovie.release_dates.results.find(
-      (el) => el.iso_3166_1 === "DE"
-    );
+    const releaseDate =
+      dataMovie.release_dates.results.find((el) => el.iso_3166_1 === "US") ||
+      dataMovie.release_dates.results.find((el) => el.iso_3166_1 === "GB") ||
+      dataMovie.release_dates.results.find((el) => el.iso_3166_1 === "DE") ||
+      dataMovie.release_dates.results[0];
     const ageRestriction =
       releaseDate?.release_dates[0] &&
       parseInt(releaseDate.release_dates[0].certification);
@@ -99,7 +101,7 @@ router.get("/movie", async (req, res) => {
     res.status(200).json({ data: movie });
   } catch (err) {
     console.log(err);
-    res.status(400).json({ message: "Fehler bei der Suche" });
+    res.status(400).json({ message: "Search error" });
   }
 });
 

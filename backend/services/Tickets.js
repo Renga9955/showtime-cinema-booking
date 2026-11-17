@@ -21,7 +21,7 @@ const sendTicket = async (ticket) => {
 
     // Create ical event
     const calendar = ical({
-      name: "Filmvorführung | Showtime",
+      name: "Movie Screening | Showtime",
     });
 
     calendar.createEvent({
@@ -41,21 +41,21 @@ const sendTicket = async (ticket) => {
     const idHTML = `<h2>ID: ${id}</h2>`;
     const movieHTML = `<h3>${movie.title}</h2>`;
     const cinemaHTML = `<h3>${cinema.title}</h2>`;
-    const datetimeHTML = `<h2>${datetime.toLocaleString("de-de", {
+    const datetimeHTML = `<h2>${datetime.toLocaleString("en-US", {
       timeZone: process.env.TIME_ZONE || "Europe/Berlin",
     })}</h2>`;
     let seatsHTML = "";
     seats.map(
       (seat) =>
-        (seatsHTML += `<li>Reihe: ${seat.row} / Platz: ${seat.col} [${seat.type.title}]</li>`)
+        (seatsHTML += `<li>Row: ${seat.row} / Seat: ${seat.col} [${seat.type.title}]</li>`)
     );
 
     const mail = {
       to: customer.email, //process.env.MAIL_SEND_TO,
-      subject: "Ticketbestellung",
-      html: `<h1>Ihre Tickets wurden gebucht!</h1>${idHTML}<img src="cid:ticket"/>${
+      subject: "Ticket Order",
+      html: `<h1>Your tickets have been booked!</h1>${idHTML}<img src="cid:ticket"/>${
         movieHTML + cinemaHTML + datetimeHTML
-      }<br/><h3>Sitzplatz:</h3><ul>${seatsHTML}</ul>`,
+      }<br/><h3>Seats:</h3><ul>${seatsHTML}</ul>`,
       attachments: [
         {
           filename: code.filename,

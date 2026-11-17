@@ -37,7 +37,7 @@ router.post("/create-payment-intent", async (req, res) => {
     // console.log("SCREENING", screening);
     if (!screening)
       return res.status(400).send({
-        message: "Screening existiert nicht",
+        message: "Screening does not exist",
       });
 
     // Get seats from screening
@@ -47,7 +47,7 @@ router.post("/create-payment-intent", async (req, res) => {
     );
     if (seats.length <= 0)
       return res.status(400).send({
-        message: "Sitzplatz existieren nicht",
+        message: "Seats do not exist",
       });
     console.log("SEATS", seats);
 
@@ -55,7 +55,7 @@ router.post("/create-payment-intent", async (req, res) => {
     const available = checkSeatAvailability(screening.bookedSeats, seats);
     if (!available)
       return res.status(400).send({
-        message: "Sitzplatz wurde bereits gebucht",
+        message: "Seat has already been booked",
       });
 
     // Sum up seat prices
@@ -120,7 +120,7 @@ router.post(
         case "payment_intent.succeeded":
           const paymentIntentSucceeded = event.data.object;
           const metadata = paymentIntentSucceeded.metadata;
-          console.log("BEZAHLUNG ERFOLGREICH");
+          console.log("PAYMENT SUCCESSFUL");
 
           // Get metadata from payment
           const { order_id } = metadata;

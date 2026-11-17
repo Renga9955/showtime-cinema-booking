@@ -11,11 +11,9 @@ const TicketListItem = (props) => {
   };
 
   const date = new Date(ticket.datetime);
-  const day = date
-    .toLocaleString("de-de", {
-      weekday: "long",
-    })
-    .slice(0, 2);
+  const day = date.toLocaleString("en-US", {
+    weekday: "short",
+  });
   const dateString = date.toLocaleDateString();
   const timeString = date.toLocaleTimeString();
 

@@ -25,26 +25,26 @@ const Dashboard = (props) => {
         {user && (
           <>
             <h4>
-              Willkommen, {user.firstName} {user.lastName}!
+              Welcome, {user.firstName} {user.lastName}!
             </h4>
 
             <div className="d-flex flex-column gap-2 mb-3 mt-5">
               {user.role === ROLES.ADMIN && (
                 <>
                   <DashboardListItem linkTo="/admin/movies">
-                    <Film /> Film-Verwaltung
+                    <Film /> Movie Management
                   </DashboardListItem>
                   <DashboardListItem linkTo="/admin/cinemas">
-                    <BorderAll /> Kinosaal-Verwaltung
+                    <BorderAll /> Cinema Hall Management
                   </DashboardListItem>
                   <DashboardListItem linkTo="/admin/seattypes">
-                    <TagFill /> Sitzplatz-Verwaltung
+                    <TagFill /> Seat Management
                   </DashboardListItem>
                   <DashboardListItem linkTo="/admin/screenings/edit">
-                    <ProjectorFill /> Vorführung-Verwaltung
+                    <ProjectorFill /> Screening Management
                   </DashboardListItem>
                   <DashboardListItem linkTo="/admin/staff">
-                    <PeopleFill /> Mitarbeiter-Verwaltung
+                    <PeopleFill /> Staff Management
                   </DashboardListItem>
                 </>
               )}
@@ -56,10 +56,10 @@ const Dashboard = (props) => {
               )}
 
               <DashboardListItem linkTo="/user/tickets">
-                <TicketFill /> Meine Tickets
+                <TicketFill /> My Tickets
               </DashboardListItem>
               <DashboardListItem linkTo="/user/account">
-                <PersonVcardFill /> Account bearbeiten
+                <PersonVcardFill /> Edit Account
               </DashboardListItem>
             </div>
           </>

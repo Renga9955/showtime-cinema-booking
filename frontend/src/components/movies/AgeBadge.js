@@ -1,4 +1,3 @@
-import { Badge } from "react-bootstrap";
 import styles from "./AgeBadge.module.css";
 
 const AgeBadge = ({ children, className }) => {

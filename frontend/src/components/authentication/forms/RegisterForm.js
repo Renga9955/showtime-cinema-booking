@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import LoadingButton from "../../ui/LoadingButton";
 import styles from "./RegisterForm.module.css";
 import PasswordInput from "./PasswordInput";
-import { InputGroup } from "react-bootstrap";
 
 const RegisterForm = (props) => {
   const [firstName, setFirstName] = useState("");
@@ -26,7 +25,7 @@ const RegisterForm = (props) => {
   const onSubmit = (ev) => {
     ev.preventDefault();
     if (password !== passwordRepeat)
-      return setErrorMsg("Passwörter stimmen nicht überein");
+      return setErrorMsg("Passwords do not match");
     else setErrorMsg();
     const newUser = { username, password, firstName, lastName, email };
     props.onSubmit(newUser);
@@ -40,30 +39,30 @@ const RegisterForm = (props) => {
     <Form onSubmit={onSubmit}>
       {errorMsgElement}
       <Form.Group className="mb-3" controlId="firstName">
-        <Form.Label>Vorname</Form.Label>
+        <Form.Label>First Name</Form.Label>
         <Form.Control
           type="text"
-          placeholder="Vorname eingeben..."
+          placeholder="Enter first name..."
           value={firstName}
           onChange={(ev) => setFirstName(ev.target.value)}
           required
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="lastName">
-        <Form.Label>Nachname</Form.Label>
+        <Form.Label>Last Name</Form.Label>
         <Form.Control
           type="text"
-          placeholder="Nachname eingeben..."
+          placeholder="Enter last name..."
           value={lastName}
           onChange={(ev) => setLastName(ev.target.value)}
           required
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="eMail">
-        <Form.Label>E-Mail</Form.Label>
+        <Form.Label>Email</Form.Label>
         <Form.Control
           type="email"
-          placeholder="E-Mail eingeben..."
+          placeholder="Enter email..."
           value={email}
           onChange={(ev) => setEmail(ev.target.value)}
           pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
@@ -71,10 +70,10 @@ const RegisterForm = (props) => {
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="username">
-        <Form.Label>Benutzername</Form.Label>
+        <Form.Label>Username</Form.Label>
         <Form.Control
           type="text"
-          placeholder="Benutzername eingeben..."
+          placeholder="Enter username..."
           value={username}
           onChange={(ev) => setUsername(ev.target.value)}
           required
@@ -82,20 +81,20 @@ const RegisterForm = (props) => {
       </Form.Group>
       <Form.Group className="mb-3" controlId="password">
         <Form.Label>
-          {props.isUpdate ? "Neues Passwort" : "Passwort"}
+          {props.isUpdate ? "New Password" : "Password"}
         </Form.Label>
         <PasswordInput
-          placeholder="Passwort eingeben..."
+          placeholder="Enter password..."
           value={password}
           onChange={(ev) => setPassword(ev.target.value)}
           required={!props.isUpdate}
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="passwordRepeat">
-        <Form.Label>Passwort wiederholen</Form.Label>
+        <Form.Label>Repeat Password</Form.Label>
         <Form.Control
           type="password"
-          placeholder="Passwort wiederholen..."
+          placeholder="Repeat password..."
           value={passwordRepeat}
           onChange={(ev) => setPasswordRepeat(ev.target.value)}
           required={!props.isUpdate}
@@ -106,7 +105,7 @@ const RegisterForm = (props) => {
         isLoading={props.isLoading}
         className={styles.submit}
       >
-        {props.isUpdate ? "Änderungen speichern" : "Registrieren"}
+        {props.isUpdate ? "Save Changes" : "Register"}
       </LoadingButton>
     </Form>
   );

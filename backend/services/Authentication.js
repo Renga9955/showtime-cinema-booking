@@ -1,9 +1,10 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
-const privateKey = process.env.PRIVATE_KEY;
+const privateKey = process.env.PRIVATE_KEY || "showtime_secret_key_jwt";
 
 const User = require("../models/User");
+const mongoose = require("mongoose");
 const { ROLES } = require("../constants");
 
 const generateToken = (user) => {
@@ -32,10 +33,10 @@ const createUser = async (user) => {
 
   let foundUser = await findUser({ username });
   if (foundUser)
-    return { status: 400, message: "Benutzername ist bereits vergeben" };
+    return { status: 400, message: "Username is already taken" };
 
   foundUser = await findUser({ email });
-  if (foundUser) return { status: 400, message: "E-Mail ist bereits vergeben" };
+  if (foundUser) return { status: 400, message: "Email is already taken" };
 
   const hashedPassword = await bcrypt.hash(password, saltRounds);
   const newUser = new User({
@@ -57,15 +58,30 @@ exports.login = async (req, res) => {
   console.log("POST /authentication/login");
   try {
     const { username, password } = req.body;
+    if (!username || !password) {
+      return res.status(400).json({ message: "Username/Email and Password are required" });
+    }
+
+    if (mongoose.connection.readyState !== 1) {
+      return res.status(503).json({
+        message: "Database is connecting or unreachable. Please verify that your current IP address is whitelisted in MongoDB Atlas Network Access.",
+      });
+    }
+
+    const trimmedIdentifier = username.trim();
+    const safeRegex = trimmedIdentifier.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     let token = null;
+
     const user = await User.findOne({
-      username: { $regex: new RegExp("^" + username + "$", "i") },
+      $or: [
+        { username: { $regex: new RegExp("^" + safeRegex + "$", "i") } },
+        { email: { $regex: new RegExp("^" + safeRegex + "$", "i") } },
+      ],
     });
-    console.log("USER:", user);
+    console.log("USER:", user ? user.username : "Not found");
 
-    if (username && password && user) {
+    if (user) {
       console.log("CHECK CREDENTIALS");
-
       const match = await bcrypt.compare(password, user.password);
       if (match) {
         token = generateToken({
@@ -75,7 +91,7 @@ exports.login = async (req, res) => {
           email: user.email,
           role: user.role,
         });
-        console.log("TOKEN:", token);
+        console.log("TOKEN GENERATED");
       }
     }
 
@@ -97,10 +113,19 @@ exports.login = async (req, res) => {
           },
         });
     }
-    return res.sendStatus(401);
+    return res.status(401).json({ message: "Invalid username/email or password" });
   } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: err });
+    console.error("Login error:", err);
+    let errorMessage = "An error occurred during login. Please try again.";
+    if (
+      err.name === "MongooseServerSelectionError" ||
+      (err.message && (err.message.includes("SSL alert number 80") || err.message.includes("whitelist")))
+    ) {
+      errorMessage = "Database connection error: Current IP is not whitelisted in MongoDB Atlas Network Access.";
+    } else if (err.message) {
+      errorMessage = err.message;
+    }
+    return res.status(500).json({ message: errorMessage });
   }
 };
 
@@ -112,6 +137,12 @@ exports.register = async (req, res) => {
   console.log("POST /authentication/register");
   try {
     const { username, password, firstName, lastName, email } = req.body;
+
+    if (mongoose.connection.readyState !== 1) {
+      return res.status(503).json({
+        message: "Database is connecting or unreachable. Please verify that your current IP address is whitelisted in MongoDB Atlas Network Access.",
+      });
+    }
 
     const newUserRes = await createUser({
       username,
@@ -148,8 +179,8 @@ exports.register = async (req, res) => {
       .status(200)
       .json({ user: userInfo });
   } catch (err) {
-    console.log(err);
-    return res.status(500).json({ message: err._message });
+    console.error("Register error:", err);
+    return res.status(500).json({ message: err.message || err._message || "Registration failed" });
   }
 };
 
@@ -202,7 +233,7 @@ exports.update = async (req, res) => {
     const user = await findUser({ username: userCookie.username });
     console.log("FOUND USER", user);
     if (!user)
-      return res.status(400).json({ message: "Benutzer nicht gefunden" });
+      return res.status(400).json({ message: "User not found" });
 
     console.log("update.username", update.username);
     const test = await findUser({ username: update.username });
@@ -210,13 +241,13 @@ exports.update = async (req, res) => {
     if (user.username !== update.username && test)
       return res
         .status(400)
-        .json({ message: "Benutzername ist bereits vergeben" });
+        .json({ message: "Username is already taken" });
 
     if (
       user.email !== update.email &&
       (await findUser({ email: update.email }))
     )
-      return res.status(400).json({ message: "Email ist bereits vergeben" });
+      return res.status(400).json({ message: "Email is already taken" });
 
     user.firstName = update.firstName;
     user.lastName = update.lastName;

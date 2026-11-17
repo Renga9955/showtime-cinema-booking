@@ -42,7 +42,7 @@ seatTypeSchema.pre("findOneAndDelete", async function (next) {
 
     if (hasReferences) {
       const error = new Error(
-        "Sitzplatztyp kann nicht gelöscht werden! Es gibt nocht Kinosäle, die ihn referenzieren."
+        "Seat type cannot be deleted! There are still cinema halls referencing it."
       );
       return next(error);
     }

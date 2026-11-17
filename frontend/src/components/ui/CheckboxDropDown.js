@@ -24,11 +24,11 @@ const CheckboxDropDown = ({ children, data, onChange }) => {
 
   useEffect(() => {
     const initValues = {};
-    data.forEach((item) => {
+    data?.forEach((item) => {
       if (item.checked) initValues[item.value] = true;
     });
     setValues(initValues);
-  },[]);
+  }, [data]);
 
   return (
     <Dropdown className={styles.dropdown}>

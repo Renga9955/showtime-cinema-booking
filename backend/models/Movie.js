@@ -114,7 +114,7 @@ movieSchema.pre("findOneAndDelete", async function (next) {
     const hasReferences = scheduledScreenings.length > 0;
     if (hasReferences) {
       const error = new Error(
-        "Film kann nicht gelöscht werden! Es gibt nocht Filmvorführungen, die ihn referenzieren."
+        "Movie cannot be deleted! There are still screenings referencing it."
       );
       return next(error);
     }

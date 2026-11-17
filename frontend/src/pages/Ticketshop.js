@@ -5,7 +5,6 @@ import { BACKEND_URL } from "../constants";
 import { useNavigate, useParams } from "react-router-dom";
 import Image from "react-bootstrap/esm/Image";
 import styles from "./Ticketshop.module.css";
-import { getTimeString } from "../services/FormatDate";
 import SeatMap from "../components/seatmap/SeatMap";
 import useFetch from "../hooks/useFetch";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
@@ -86,7 +85,7 @@ const Ticketshop = (props) => {
         });
       })
       .catch((err) => navigate("/"));
-  }, [id, navigate]);
+  }, [fetch, id, navigate]);
 
   const onSeatClickHandler = (seat) => {
     if (!seat || !seat?.type || seat?.status === "booked") return;
@@ -140,7 +139,7 @@ const Ticketshop = (props) => {
               animate={{ opacity: 1 }}
               initial={{ opacity: 0 }}
               exit={{ opacity: 0 }}
-            >{`1x Reihe: ${seat.row}, Platz: ${seat.col} (${seat.type.title})`}</motion.li>
+            >{`1x Row: ${seat.row}, Seat: ${seat.col} (${seat.type.title})`}</motion.li>
           );
         })}
       </AnimatePresence>
@@ -187,13 +186,13 @@ const Ticketshop = (props) => {
                       {screening.scheduledScreening.cinema.title}
                     </h2>
                     <h4 className="mt-3">
-                      {new Date(screening.date).toLocaleString("de-de", {
+                      {new Date(screening.date).toLocaleString("en-US", {
                         weekday: "long",
                       })}
                     </h4>
                     <h4>
                       {new Date(screening.date).toLocaleDateString()},{" "}
-                      {screening.scheduledScreening.time} Uhr
+                      {screening.scheduledScreening.time}
                     </h4>
                   </div>
                 </div>
@@ -207,7 +206,7 @@ const Ticketshop = (props) => {
           {isFetching && <LoadingSpinner />}
           {!isFetching && (
             <>
-              <h2>Ticket Auswahl</h2>
+              <h2>Ticket Selection</h2>
               <div className={styles.ticketSelection}>
                 <SeatMap
                   data={seatMap}
@@ -217,20 +216,20 @@ const Ticketshop = (props) => {
                 />
 
                 <div className={styles.cart}>
-                  <h3>Ausgewählte Tickets</h3>
-                  <h5 className="mt-3">Gesamtpreis: {totalPrice} € </h5>
+                  <h3>Selected Tickets</h3>
+                  <h5 className="mt-3">Total Price: {totalPrice} € </h5>
                   <MainButton
                     disabled={selectedTickets?.length <= 0}
                     onClick={goToCartHandler}
                     className="mb-3"
                   >
                     <Cart4 />
-                    Zur Kasse gehen
+                    Proceed to Checkout
                   </MainButton>
                   {selectedTickets?.length > 0 ? (
                     selectedTicketsElements
                   ) : (
-                    <h6 className="text-muted">Keine Tickets ausgewählt</h6>
+                    <h6 className="text-muted">No tickets selected</h6>
                   )}
                 </div>
               </div>

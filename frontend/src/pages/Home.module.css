@@ -1,0 +1,20 @@
+.headerRow {
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.sectionHeading {
+  font-family: 'Outfit', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .sectionHeading {
+    font-size: 1.75rem;
+  }
+}

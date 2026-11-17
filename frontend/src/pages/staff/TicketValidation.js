@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Container from "../../components/ui/Container";
 import Content from "../../components/ui/Content";
 import { QrReader } from "react-qr-reader";
@@ -13,29 +13,34 @@ const TicketValidation = (props) => {
   const [showValidationModal, setShowValidationModal] = useState(false);
   const { fetch } = useFetch();
 
+  const fetchTicket = useCallback(
+    (code) => {
+      if (!code || showValidationModal) return;
+
+      fetch.get(`${BACKEND_URL}/tickets/validate/${code}`).then((res) => {
+        if (res.status !== 200) return;
+        const ticket = {
+          id: res.data._id,
+          customer: res.data.customer,
+          seats: res.data.seats,
+          checked: res.data.checked,
+          datetime: res.data.datetime,
+          movie: res.data.screening.scheduledScreening.movie.title,
+          cinema: res.data.screening.scheduledScreening.cinema.title,
+        };
+        setTicket(ticket);
+        setShowValidationModal(true);
+      });
+    },
+    [fetch, showValidationModal]
+  );
+
   useEffect(() => {
-    fetchTicket(code);
-    setCode(null);
-  }, [code]);
-
-  const fetchTicket = (code) => {
-    if (!code || showValidationModal) return;
-
-    fetch.get(`${BACKEND_URL}/tickets/validate/${code}`).then((res) => {
-      if (res.status !== 200) return;
-      const ticket = {
-        id: res.data._id,
-        customer: res.data.customer,
-        seats: res.data.seats,
-        checked: res.data.checked,
-        datetime: res.data.datetime,
-        movie: res.data.screening.scheduledScreening.movie.title,
-        cinema: res.data.screening.scheduledScreening.cinema.title,
-      };
-      setTicket(ticket);
-      setShowValidationModal(true);
-    });
-  };
+    if (code) {
+      fetchTicket(code);
+      setCode(null);
+    }
+  }, [code, fetchTicket]);
 
   const onScan = (result, error) => {
     if (!!result) {
@@ -53,7 +58,7 @@ const TicketValidation = (props) => {
     <>
       <Container>
         <Content style={{ minHeight: "70vh" }}>
-          <h1>Ticket Validierung</h1>
+          <h1>Ticket Validation</h1>
           <hr />
           <QrReader
             onResult={onScan.bind(showValidationModal)}

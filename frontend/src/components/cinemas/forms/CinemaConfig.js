@@ -1,6 +1,6 @@
 import Form from "react-bootstrap/Form";
 import SeatMap from "../../seatmap/SeatMap";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { BACKEND_URL } from "../../../constants";
 import LoadingButton from "../../ui/LoadingButton";
 import useFetch from "../../../hooks/useFetch";
@@ -13,8 +13,8 @@ const CinemaConfig = (props) => {
   const [seatMap, setSeatMap] = useState();
   const [selectedSeatType, setSelectedSeatType] = useState();
   const [seatTypes, setSeatTypes] = useState();
-  const [isInit, setIsInit] = useState(false);
   const { fetch } = useFetch();
+  const isFirstRender = useRef(true);
 
   const seatClickHandler = (seat) => {
     if (seat.type?.title === selectedSeatType.title) seat.type = null;
@@ -48,16 +48,14 @@ const CinemaConfig = (props) => {
       setSeatTypes(res.data);
       setSelectedSeatType(res.data[0]);
     });
-  }, []);
+  }, [fetch]);
 
   useEffect(() => {
     if (props.cinema) {
-      setTitle(props.cinema.title);
-      if (!isInit) {
-        setRowCnt(props?.cinema?.map?.rows?.length);
-        setColCnt(props?.cinema?.map?.rows[0]?.length);
-        setIsInit(true);
-      }
+      setTitle(props.cinema.title || "");
+      const rows = props.cinema?.map?.rows || [];
+      setRowCnt(rows.length || 10);
+      setColCnt(rows[0]?.length || 10);
       setSeatMap({ map: props.cinema.map });
     } else {
       const DATA = {
@@ -65,9 +63,9 @@ const CinemaConfig = (props) => {
           rows: [],
         },
       };
-      for (let r = 0; r < rowCnt; r++) {
+      for (let r = 0; r < 10; r++) {
         const row = [];
-        for (let c = 0; c < colCnt; c++) {
+        for (let c = 0; c < 10; c++) {
           row.push({
             row: r,
             col: c,
@@ -78,15 +76,21 @@ const CinemaConfig = (props) => {
       }
       setSeatMap(DATA);
     }
-  }, [props.cinema, rowCnt, colCnt]);
+  }, [props.cinema]);
 
   useEffect(() => {
-    if (seatMap) {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    setSeatMap((prevSeatMap) => {
+      if (!prevSeatMap?.map?.rows) return prevSeatMap;
+      const prevRows = prevSeatMap.map.rows;
       const newRows = [];
       for (let r = 0; r < rowCnt; r++) {
-        if (r < seatMap.map.rows.length) {
-          const row = seatMap.map.rows[r].slice(0, colCnt);
-          for (let c = seatMap.map.rows[r].length; c < colCnt; c++) {
+        if (r < prevRows.length) {
+          const row = prevRows[r].slice(0, colCnt);
+          for (let c = prevRows[r].length; c < colCnt; c++) {
             row.push({
               row: r,
               col: c,
@@ -106,12 +110,12 @@ const CinemaConfig = (props) => {
           newRows.push(row);
         }
       }
-      setSeatMap({
+      return {
         map: {
           rows: newRows,
         },
-      });
-    }
+      };
+    });
   }, [rowCnt, colCnt]);
 
   const seatTypeOptions = seatTypes?.map((type, i) => (
@@ -131,11 +135,11 @@ const CinemaConfig = (props) => {
     <>
       <Form>
         <Form.Group className="mb-3" controlId="title">
-          <Form.Label>Titel</Form.Label>
+          <Form.Label>Title</Form.Label>
           <div className="d-flex justify-content-center align-items-start gap-3">
             <Form.Control
               type="text"
-              placeholder="Titel eingeben..."
+              placeholder="Enter title..."
               onChange={(ev) => setTitle(ev.target.value)}
               value={title}
             />
@@ -145,7 +149,7 @@ const CinemaConfig = (props) => {
               onClick={onSubmit}
               isLoading={props.isLoading}
             >
-              {props.isNew ? "Erstellen" : "Aktualisieren"}
+              {props.isNew ? "Create" : "Update"}
             </LoadingButton>
           </div>
           {errorMsg}
@@ -154,7 +158,7 @@ const CinemaConfig = (props) => {
       <hr />
       <div className="d-flex flex-row justify-content-center gap-3">
         <Form.Group className="mb-3" controlId="rowCnt">
-          <Form.Label>Reihen</Form.Label>
+          <Form.Label>Rows</Form.Label>
           <Form.Control
             type="number"
             value={rowCnt}
@@ -163,7 +167,7 @@ const CinemaConfig = (props) => {
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="colCnt">
-          <Form.Label>Sitzplätze</Form.Label>
+          <Form.Label>Seats</Form.Label>
           <Form.Control
             type="number"
             value={colCnt}
@@ -175,9 +179,9 @@ const CinemaConfig = (props) => {
       <hr />
       <div className="d-flex w-100 justify-content-center">
         <Form.Group className={styles.typeSelector} controlId="colCnt">
-          <Form.Label>Sitzplatz Typ</Form.Label>
+          <Form.Label>Seat Type</Form.Label>
           <Form.Select
-            aria-label="Sitzplatztyp"
+            aria-label="Seat type"
             onChange={changeSeatTypeHandler}
           >
             {seatTypeOptions}

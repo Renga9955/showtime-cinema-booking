@@ -12,6 +12,8 @@ const Payment = (props) => {
   const { fetch, isFetching } = useFetch();
   const [error, setError] = useState();
 
+  const { cart } = props;
+
   useEffect(() => {
     const fetchPublicKey = async () => {
       const res = await fetch.get(`${BACKEND_URL}/payment/config`);
@@ -20,20 +22,21 @@ const Payment = (props) => {
       setStripePromise(loadStripe(publicKey));
     };
     fetchPublicKey();
-  }, []);
+  }, [fetch]);
 
   useEffect(() => {
+    if (!cart) return;
     const fetchClientSecret = async () => {
       const res = await fetch.post(
         `${BACKEND_URL}/payment/create-payment-intent`,
-        props.cart
+        cart
       );
       const clientSecret = res?.data?.clientSecret;
       if (!clientSecret) return setError(true);
       setClientSecret(clientSecret);
     };
     fetchClientSecret();
-  }, []);
+  }, [fetch, cart]);
 
   return (
     <>
@@ -41,9 +44,9 @@ const Payment = (props) => {
       {!isFetching && error && (
         <>
           <h2 className="text-danger">
-            Fehler bei der Verbindung zum Zahlungsdienstleister
+            Error connecting to payment provider
           </h2>
-          <h4 className="text-danger">Bitte Vorgang wiederholen</h4>
+          <h4 className="text-danger">Please try again</h4>
         </>
       )}
       {stripePromise && clientSecret && (

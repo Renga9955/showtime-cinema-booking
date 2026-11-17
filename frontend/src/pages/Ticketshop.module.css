@@ -27,7 +27,7 @@
 .ticketSelection {
   display: flex;
   flex-wrap: wrap;
-  justify-content: start;
+  justify-content: flex-start;
   gap: 2.5em;
   row-gap: 2em;
 }

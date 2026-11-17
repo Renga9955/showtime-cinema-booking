@@ -1,7 +1,7 @@
 import Form from "react-bootstrap/Form";
 import { useState } from "react";
 import LoadingButton from "../../ui/LoadingButton";
-import { Key, KeyFill, Person, PersonFill } from "react-bootstrap-icons";
+import { PersonFill } from "react-bootstrap-icons";
 import { InputGroup } from "react-bootstrap";
 import PasswordInput from "./PasswordInput";
 
@@ -20,22 +20,22 @@ const LoginForm = ({ onSubmit, error, isLoading }) => {
     <Form className="pt-3" onSubmit={submitHandler}>
       {errorMsg}
       <Form.Group className="mb-3" controlId="id">
-        <Form.Label>Benutzername</Form.Label>
+        <Form.Label>Username or Email</Form.Label>
         <InputGroup>
           <InputGroup.Text id="inputUsername">
             <PersonFill />
           </InputGroup.Text>
           <Form.Control
             type="text"
-            placeholder="Benutzernamen eingeben..."
+            placeholder="Enter username or email..."
             onChange={(ev) => setUsername(ev.target.value)}
           />
         </InputGroup>
       </Form.Group>
       <Form.Group className="mb-3" controlId="password">
-        <Form.Label>Passwort</Form.Label>
+        <Form.Label>Password</Form.Label>
         <PasswordInput
-          placeholder="Passwort eingeben"
+          placeholder="Enter password"
           icon={true}
           onChange={(ev) => setPassword(ev.target.value)}
         />
@@ -46,7 +46,7 @@ const LoginForm = ({ onSubmit, error, isLoading }) => {
         className="mt-2"
         isLoading={isLoading}
       >
-        Einloggen
+        Log In
       </LoadingButton>
     </Form>
   );

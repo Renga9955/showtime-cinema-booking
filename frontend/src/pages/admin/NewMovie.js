@@ -19,7 +19,7 @@ const NewMovie = (props) => {
         behavior: "smooth",
       });
       createMessage({
-        text: "Film wurde erfolgreich erstellt",
+        text: "Movie was successfully created",
         variant: "success",
       });
     }
@@ -29,7 +29,7 @@ const NewMovie = (props) => {
   return (
     <Container>
       <Content className={styles.content}>
-        <h2>Neuen Film hinzufügen</h2>
+        <h2>Add New Movie</h2>
         <MovieConfig
           onSubmit={addMovieHandler}
           isLoading={isFetching}

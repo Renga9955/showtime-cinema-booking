@@ -14,7 +14,7 @@ const SearchInput = props => {
           onKeyDown={props.onKeyDown}
         />
         <LoadingButton className={styles.searchBtn} isLoading={props.isLoading} onClick={props.onClick}>
-          Suchen
+          Search
         </LoadingButton>
       </div>
     );

@@ -1,3 +1,7 @@
+const buffer = require("node:buffer");
+if (!buffer.SlowBuffer) {
+  buffer.SlowBuffer = buffer.Buffer;
+}
 require("dotenv").config();
 
 const fetch = (...args) =>
@@ -10,7 +14,9 @@ const mongoose = require("mongoose");
 const mongoString = process.env.MONGODB_URI;
 const cookieParser = require("cookie-parser");
 
-mongoose.connect(mongoString);
+mongoose.connect(mongoString, { serverSelectionTimeoutMS: 5000 }).catch((error) => {
+  console.error("MongoDB Atlas initial connection error:", error.message);
+});
 const database = mongoose.connection;
 
 database.on("error", (error) => {

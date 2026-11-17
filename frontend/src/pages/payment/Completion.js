@@ -23,14 +23,14 @@ const Completion = (props) => {
   const success = (
     <>
       {" "}
-      <h1>Der Bezahlvorgang war erfolgreich!</h1>
-      <h2 className="mt-2">Wir sehen uns im Kino 🎬</h2>
-      <h3 className="mt-5">Die Tickets wurden an Ihre Email gesendet</h3>
-      <h6 className="mt-5">Weiterleitung in 10 Sekunden...</h6>
+      <h1>Payment was successful!</h1>
+      <h2 className="mt-2">See you at the cinema 🎬</h2>
+      <h3 className="mt-5">Your tickets have been sent to your email</h3>
+      <h6 className="mt-5">Redirecting in 10 seconds...</h6>
       <p>
-        Sollten Sie nicht weitergeleitet werden,{" "}
+        If you are not redirected,{" "}
         <Link to="/" className={styles.link}>
-          klicke hier
+          click here
         </Link>
       </p>
     </>
@@ -38,13 +38,13 @@ const Completion = (props) => {
 
   const failure = (
     <>
-      <h1>Beim Bezahlvorgang ist ein Fehler aufgetreten</h1>
+      <h1>An error occurred during payment</h1>
       <h2>ID: {payment_intent}</h2>
-      <h6 className="mt-5">Weiterleitung in 10 Sekunden...</h6>
+      <h6 className="mt-5">Redirecting in 10 seconds...</h6>
       <p>
-        Sollten Sie nicht weitergeleitet werden,{" "}
+        If you are not redirected,{" "}
         <Link to="/" className={styles.link}>
-          klicke hier
+          click here
         </Link>
       </p>
     </>
@@ -53,7 +53,7 @@ const Completion = (props) => {
   const content = redirect_status === "succeeded" ? success : failure;
 
   return (
-    <Container style={{minHeight: "75vh"}}>
+    <Container style={{ minHeight: "75vh" }}>
       <Content>{content}</Content>
     </Container>
   );

@@ -13,7 +13,7 @@ const NavBar = () => {
   const [expanded, setExpanded] = useState(false);
 
   const collapseHandler = () => {
-    if(window.innerWidth >= 768) return;
+    if (window.innerWidth >= 768) return;
     setExpanded(expanded ? false : "expanded");
   };
 
@@ -50,7 +50,7 @@ const NavBar = () => {
             )}
             {user && user.role === ROLES.USER && (
               <NavLink to="/user/tickets" onClick={collapseHandler}>
-                Meine Tickets
+                My Tickets
               </NavLink>
             )}
             {user &&

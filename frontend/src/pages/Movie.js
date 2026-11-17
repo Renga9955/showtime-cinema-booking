@@ -44,7 +44,7 @@ const Movie = (props) => {
       }
     };
     fetchData();
-  }, [id]);
+  }, [fetch, id, navigate]);
 
   const castElements = movie?.credits?.cast?.map((el, i) => (
     <CastAvatar key={i} person={el} />
@@ -90,11 +90,11 @@ const Movie = (props) => {
               <p className={styles.description}>{movie.description}</p>
               <div className="mt-5 d-flex gap-5">
                 <div>
-                  <h4 className="mb-1">Regie</h4>
+                  <h4 className="mb-1">Director</h4>
                   <p>{movie.credits.crew.director.name}</p>
                 </div>
                 <div>
-                  <h4 className="mb-1">Drehbuch</h4>
+                  <h4 className="mb-1">Screenplay</h4>
                   <p>{movie.credits.crew.screenwriter.name}</p>
                 </div>
               </div>
@@ -110,7 +110,7 @@ const Movie = (props) => {
                   </div>
                 ) : (
                   <h3 className="text-muted text-center mt-4">
-                    Keine Vorführungen im Programmplan vorhanden
+                    No screenings available in the program schedule
                   </h3>
                 )}
 
@@ -135,13 +135,13 @@ const Movie = (props) => {
                 </HorizontalScrollContainer>
               </div>
               <div className={styles.sideInformation}>
-                <h3>Informationen</h3>
+                <h3>Information</h3>
                 <p>
-                  <b>Originaltitel:</b> {movie.originalTitle}
+                  <b>Original Title:</b> {movie.originalTitle}
                 </p>
                 {movie.keywords?.length > 0 && (
                   <section>
-                    <h3>Schlüsselwörter</h3>
+                    <h3>Keywords</h3>
                     <div className="d-flex gap-1 flex-wrap">
                       {keywordElements}
                     </div>

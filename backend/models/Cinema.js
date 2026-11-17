@@ -36,7 +36,7 @@ cinemaSchema.pre("findOneAndDelete", async function (next) {
 
     if (hasReferences) {
       const error = new Error(
-        "Kinosaal kann nicht gelöscht werden! Es gibt nocht Filmvorführungen, die ihn referenzieren."
+        "Cinema hall cannot be deleted! There are still screenings referencing it."
       );
       return next(error);
     }

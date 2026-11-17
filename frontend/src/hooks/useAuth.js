@@ -15,9 +15,14 @@ const useAuth = () => {
     return fetch
       .post(`${BACKEND_URL}/authentication/login`, { username, password })
       .then(async (res) => {
-        if (res.status !== 200) return false;
+        if (res.status !== 200) {
+          return {
+            success: false,
+            message: res.message || "Invalid username/email or password",
+          };
+        }
         saveUser(res.user);
-        return true;
+        return { success: true, user: res.user };
       });
   };
 
@@ -26,7 +31,7 @@ const useAuth = () => {
       if (res.status === 200) {
         removeUser();
         createMessage({
-          text: "Erfolgreich ausgeloggt",
+          text: "Successfully logged out",
           variant: "success",
         });
       }
@@ -42,7 +47,7 @@ const useAuth = () => {
     if (res.status === 200) {
       saveUser(res.user);
       createMessage({
-        text: "Erfolgreich registriert",
+        text: "Successfully registered",
         variant: "success",
       });
     }
@@ -57,7 +62,7 @@ const useAuth = () => {
     } catch (err) {
       console.log(err);
     }
-  }, []);
+  }, [setUser]);
 
   return {
     login,

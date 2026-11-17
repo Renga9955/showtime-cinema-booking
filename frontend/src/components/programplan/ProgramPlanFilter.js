@@ -25,7 +25,7 @@ const ProgramPlanFilter = ({
   return (
     <div className={styles.container}>
       <Form.Select
-        aria-label="Zeit aussuchen"
+        aria-label="Select time"
         className={styles.select}
         defaultValue={timeOptions?.default}
         onChange={(ev) => onSelectTime(ev.target.value)}
@@ -40,7 +40,7 @@ const ProgramPlanFilter = ({
         Genres
       </CheckboxDropDown>
       <CheckboxDropDown data={ageOptions} onChange={onSelectFsk}>
-        FSK
+        Age Rating
       </CheckboxDropDown>
     </div>
   );

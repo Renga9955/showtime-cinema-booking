@@ -1,6 +1,5 @@
 import Container from "../../components/ui/Container";
 import Content from "../../components/ui/Content";
-import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { BACKEND_URL } from "../../constants";
@@ -37,7 +36,7 @@ const Cinemas = (props) => {
         setCinemas(cinemaItemsSorted);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [fetchPage]);
 
   const deleteCinemaHandler = () => {
     fetch.delete(`${BACKEND_URL}/cinemas/${deleteCinema.title}`).then((res) => {
@@ -48,7 +47,7 @@ const Cinemas = (props) => {
         return cinemas;
       });
       createMessage({
-        text: "Kinosaal wurde erfolgreich gelöscht",
+        text: "Cinema hall was successfully deleted",
         variant: "success",
       });
     });
@@ -65,11 +64,11 @@ const Cinemas = (props) => {
       <Container>
         <Content className={styles.content} style={{minHeight: "70vh"}}>
           <div className={styles.header}>
-            <h1>Kinosaal Verwaltung</h1>
+            <h1>Cinema Hall Management</h1>
             <hr />
             <Link to="/admin/cinemas/new">
               <MainButton className="mb-4">
-                Neuen Kinosaal hinzufügen
+                Add new cinema hall
               </MainButton>
             </Link>
           </div>
@@ -81,7 +80,7 @@ const Cinemas = (props) => {
               )}
               {cinemas.length <= 0 && (
                 <h2 className="text-muted text-center">
-                  Keine Kinosäle vorhanden
+                  No cinema halls available
                 </h2>
               )}
             </>
@@ -91,7 +90,7 @@ const Cinemas = (props) => {
       <DeleteModal
         show={showDeleteModal}
         title={deleteCinema?.title}
-        text="Wollen Sie wirklich den Kinosaal löschen?"
+        text="Are you sure you want to delete this cinema hall?"
         onClose={() => setShowDeleteModal(false)}
         onDelete={deleteCinemaHandler}
         isLoading={isFetching}
