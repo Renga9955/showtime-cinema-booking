@@ -26,7 +26,15 @@ const Completion = (props) => {
       <h1>Payment was successful!</h1>
       <h2 className="mt-2">See you at the cinema 🎬</h2>
       <h3 className="mt-5">Your tickets have been sent to your email</h3>
-      <h6 className="mt-5">Redirecting in 10 seconds...</h6>
+      <div className="mt-4 mb-3 d-flex justify-content-center gap-3">
+        <Link to="/user/tickets" className="btn btn-primary px-4 py-2">
+          View My Tickets
+        </Link>
+        <Link to="/" className="btn btn-outline-light px-4 py-2">
+          Home
+        </Link>
+      </div>
+      <h6 className="mt-4">Redirecting in 10 seconds...</h6>
       <p>
         If you are not redirected,{" "}
         <Link to="/" className={styles.link}>

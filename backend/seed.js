@@ -10,386 +10,582 @@ const Cinema = require("./models/Cinema");
 const SeatType = require("./models/SeatType");
 const ScheduledScreening = require("./models/ScheduledScreening");
 
-const sampleMovies = [
+const tamilMovies = [
   {
-    title: "Starlight Odyssey",
-    originalTitle: "Starlight Odyssey",
-    subtitle: "Beyond the Event Horizon",
+    title: "Leo",
+    originalTitle: "லியோ",
+    subtitle: "Bloody Sweet",
     description:
-      "When a deep space exploration vessel intercepts a mysterious signal from an uncharted nebula, the crew embarks on a high-stakes voyage across the cosmic frontier to prevent an impending dimensional collapse.",
-    runtime: 148,
-    is3D: true,
-    startdate: new Date(),
+      "Parthiban is a mild-mannered cafe owner and animal rescuer in Himachal Pradesh living peacefully with his wife and children. When his lethal combat skills are unexpectedly revealed during a violent cafe robbery, dangerous gangsters Antony and Harold Das arrive, insisting he is Leo Das, the thought-to-be-dead son of their feared crime cartel.",
+    runtime: 164,
+    is3D: false,
+    startdate: new Date("2023-10-19"),
     release: {
-      productionCountry: "US",
+      productionCountry: "IN",
+      productionYear: 2023,
+      ageRestriction: 16,
+    },
+    genres: ["Action", "Crime", "Thriller"],
+    keywords: ["LCU", "gangster", "cartel", "family", "action", "himachal"],
+    credits: {
+      crew: {
+        director: { name: "Lokesh Kanagaraj" },
+        screenwriter: { name: "Lokesh Kanagaraj" },
+      },
+      cast: [
+        {
+          name: "Vijay",
+          roleName: "Parthiban / Leo Das",
+          img: "https://upload.wikimedia.org/wikipedia/commons/c/cd/Vijay_at_the_Nadigar_Sangam_Protest.jpg",
+        },
+        {
+          name: "Trisha Krishnan",
+          roleName: "Sathya",
+          img: "https://upload.wikimedia.org/wikipedia/commons/6/6d/Trisha_Krishnan_at_61st_Filmfare_Awards_South.jpg",
+        },
+        {
+          name: "Sanjay Dutt",
+          roleName: "Antony Das",
+          img: "https://upload.wikimedia.org/wikipedia/commons/e/ec/Sanjay_Dutt_at_Star_Guild_Awards.jpg",
+        },
+        {
+          name: "Arjun Sarja",
+          roleName: "Harold Das",
+          img: "https://upload.wikimedia.org/wikipedia/commons/c/cf/Arjun_Sarja_at_61st_Filmfare_Awards_South.jpg",
+        },
+      ],
+    },
+    media: {
+      images: {
+        poster:
+          "https://upload.wikimedia.org/wikipedia/en/7/75/Leo_%282023_Indian_film%29.jpg",
+      },
+      videos: {
+        trailer: {
+          key: "Po3jStA673E",
+          name: "Leo Official Trailer",
+          site: "YouTube",
+        },
+      },
+    },
+  },
+  {
+    title: "Jailer",
+    originalTitle: "ஜெயிலர்",
+    subtitle: "Hukum - Tiger Ka Hukum",
+    description:
+      "'Tiger' Muthuvel Pandian, a retired prison superintendent leading a quiet, disciplined family life, re-enters the underworld when his honest ACP son goes missing while tracking down an international smuggling ring trafficking stolen temple idols.",
+    runtime: 168,
+    is3D: false,
+    startdate: new Date("2023-08-10"),
+    release: {
+      productionCountry: "IN",
+      productionYear: 2023,
+      ageRestriction: 16,
+    },
+    genres: ["Action", "Comedy", "Crime"],
+    keywords: ["police", "smuggling", "family", "jailer", "revenge"],
+    credits: {
+      crew: {
+        director: { name: "Nelson Dilipkumar" },
+        screenwriter: { name: "Nelson Dilipkumar" },
+      },
+      cast: [
+        {
+          name: "Rajinikanth",
+          roleName: "'Tiger' Muthuvel Pandian",
+          img: "https://upload.wikimedia.org/wikipedia/commons/b/b3/Rajinikanth_in_2024.jpg",
+        },
+        {
+          name: "Vinayakan",
+          roleName: "Varman",
+          img: "https://upload.wikimedia.org/wikipedia/commons/9/9f/Vinayakan_at_50th_IFFI_2019.jpg",
+        },
+        {
+          name: "Ramya Krishnan",
+          roleName: "Vijaya Pandian",
+          img: "https://upload.wikimedia.org/wikipedia/commons/e/e0/Ramya_Krishnan_at_the_54th_Filmfare_Awards_South.jpg",
+        },
+        {
+          name: "Vasanth Ravi",
+          roleName: "ACP Arjun Pandian",
+          img: "https://upload.wikimedia.org/wikipedia/commons/a/ab/Vasanth_Ravi_at_Taramani_Press_Meet.jpg",
+        },
+      ],
+    },
+    media: {
+      images: {
+        poster:
+          "https://upload.wikimedia.org/wikipedia/en/c/cb/Jailer_2023_Tamil_film_poster.jpg",
+      },
+      videos: {
+        trailer: {
+          key: "xenOE1Tma0A",
+          name: "Jailer Showcase",
+          site: "YouTube",
+        },
+      },
+    },
+  },
+  {
+    title: "The Greatest of All Time",
+    originalTitle: "தி கிரேட்டஸ்ட் ஆஃப் ஆல் டைம்",
+    subtitle: "A Venkat Prabhu Hero",
+    description:
+      "Gandhi, a decorated field agent in the Special Anti-Terrorist Squad (SATS), retires following a tragic foreign mission that resulted in the presumed death of his young son. Years later, a resurfaced counter-terrorism operation in Thailand reveals that his son is alive and has been weaponized by a former rogue commander.",
+    runtime: 179,
+    is3D: false,
+    startdate: new Date("2024-09-05"),
+    release: {
+      productionCountry: "IN",
       productionYear: 2024,
       ageRestriction: 12,
     },
-    genres: ["Sci-Fi", "Adventure", "Drama"],
-    keywords: ["space", "wormhole", "exploration", "galaxy"],
+    genres: ["Action", "Sci-Fi", "Thriller"],
+    keywords: ["sats", "agent", "clone", "espionage", "father-son"],
     credits: {
       crew: {
-        director: { name: "Elena Vance" },
-        screenwriter: { name: "Marcus Thorne" },
+        director: { name: "Venkat Prabhu" },
+        screenwriter: { name: "Venkat Prabhu" },
       },
       cast: [
         {
-          name: "David Sterling",
-          roleName: "Commander Sean Hayes",
-          img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300",
+          name: "Vijay",
+          roleName: "MS Gandhi / Jeevan Gandhi",
+          img: "https://upload.wikimedia.org/wikipedia/commons/c/cd/Vijay_at_the_Nadigar_Sangam_Protest.jpg",
         },
         {
-          name: "Aria Montgomery",
-          roleName: "Dr. Maya Lin",
-          img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300",
+          name: "Prashanth",
+          roleName: "Sunil Thiagarajan",
+          img: "https://upload.wikimedia.org/wikipedia/commons/8/87/Prashanth_at_Saahasam_Audio_Launch.jpg",
+        },
+        {
+          name: "Prabhu Deva",
+          roleName: "Kalyan Sundaram",
+          img: "https://upload.wikimedia.org/wikipedia/commons/5/52/Prabhu_Deva_at_the_60th_Britannia_Filmfare_Awards_South_2013.jpg",
+        },
+        {
+          name: "Sneha",
+          roleName: "Anuradha Gandhi",
+          img: "https://upload.wikimedia.org/wikipedia/commons/7/77/Sneha_at_the_60th_Britannia_Filmfare_Awards_South_2013.jpg",
         },
       ],
     },
     media: {
       images: {
         poster:
-          "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&q=80",
+          "https://upload.wikimedia.org/wikipedia/en/1/1e/The_Greatest_of_All_Time.jpg",
       },
       videos: {
         trailer: {
-          key: "dQw4w9WgXcQ",
-          name: "Official Teaser",
+          key: "jxCI4d_7lVw",
+          name: "The Greatest of All Time Official Trailer",
           site: "YouTube",
         },
       },
     },
   },
   {
-    title: "Shadows of the Citadel",
-    originalTitle: "Shadows of the Citadel",
-    subtitle: "Secrets Lurk in the Dark",
+    title: "Amaran",
+    originalTitle: "அமரன்",
+    subtitle: "Heroes Live Forever",
     description:
-      "In an ancient walled kingdom where secrets are traded as currency, an exiled royal archivist uncovers a treasonous conspiracy that reaches into the highest chambers of the realm.",
-    runtime: 132,
+      "A biographical war action drama chronicling the life and valor of Major Mukund Varadarajan, an officer in the 44th Rashtriya Rifles battalion of the Indian Army who led anti-terror operations in Shopian, Jammu and Kashmir, and was posthumously awarded the Ashoka Chakra.",
+    runtime: 169,
     is3D: false,
-    startdate: new Date(),
+    startdate: new Date("2024-10-31"),
     release: {
-      productionCountry: "GB",
+      productionCountry: "IN",
       productionYear: 2024,
-      ageRestriction: 16,
-    },
-    genres: ["Mystery", "Thriller", "Drama"],
-    keywords: ["conspiracy", "castle", "royalty", "mystery"],
-    credits: {
-      crew: {
-        director: { name: "Jonathan Cross" },
-        screenwriter: { name: "Sarah Caldwell" },
-      },
-      cast: [
-        {
-          name: "Alistair Finch",
-          roleName: "Archivist Logan Gray",
-          img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300",
-        },
-        {
-          name: "Clara Beaumont",
-          roleName: "Lady Beatrice",
-          img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300",
-        },
-      ],
-    },
-    media: {
-      images: {
-        poster:
-          "https://images.unsplash.com/photo-1514539079130-25950c84af65?w=800&q=80",
-      },
-      videos: {
-        trailer: {
-          key: "dQw4w9WgXcQ",
-          name: "Official Trailer",
-          site: "YouTube",
-        },
-      },
-    },
-  },
-  {
-    title: "The Clockwork Detective",
-    originalTitle: "The Clockwork Detective",
-    subtitle: "Murder in the Age of Steam",
-    description:
-      "In Victorian New London, a reclusive mechanical savant and his clockwork automaton partner investigate an impossible string of vault heists orchestrated by a phantom thief.",
-    runtime: 118,
-    is3D: false,
-    startdate: new Date(),
-    release: {
-      productionCountry: "DE",
-      productionYear: 2023,
       ageRestriction: 12,
     },
-    genres: ["Action", "Crime", "Mystery"],
-    keywords: ["steampunk", "detective", "victorian", "gears"],
+    genres: ["Action", "Biography", "Drama", "War"],
+    keywords: ["indian army", "biopic", "kashmir", "ashoka chakra", "patriotism"],
     credits: {
       crew: {
-        director: { name: "Wilhelm Richter" },
-        screenwriter: { name: "Heinrich Mueller" },
+        director: { name: "Rajkumar Periasamy" },
+        screenwriter: { name: "Rajkumar Periasamy" },
       },
       cast: [
         {
-          name: "Arthur Pendelton",
-          roleName: "Inspector Charles Fox",
-          img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300",
+          name: "Sivakarthikeyan",
+          roleName: "Major Mukund Varadarajan",
+          img: "https://upload.wikimedia.org/wikipedia/commons/0/00/Sivakarthikeyan_at_the_Remo_Audio_Launch.jpg",
         },
         {
-          name: "Gwendolyn Hart",
-          roleName: "Millicent Ward",
-          img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300",
+          name: "Sai Pallavi",
+          roleName: "Indhu Rebecca Varghese",
+          img: "https://upload.wikimedia.org/wikipedia/commons/9/91/Sai_Pallavi_at_63rd_Filmfare_Awards_South.jpg",
+        },
+        {
+          name: "Bhuvan Arora",
+          roleName: "Sepoy Vikram Singh",
+          img: "https://upload.wikimedia.org/wikipedia/commons/d/de/Bhuvan_Arora_Farzi.jpg",
+        },
+        {
+          name: "Rahul Bose",
+          roleName: "Colonel Amit Singh Dahiya",
+          img: "https://upload.wikimedia.org/wikipedia/commons/2/22/Rahul_Bose_at_the_screening_of_Poorna.jpg",
         },
       ],
     },
     media: {
       images: {
         poster:
-          "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=800&q=80",
+          "https://upload.wikimedia.org/wikipedia/en/5/54/Amaran_2024_poster.jpg",
       },
       videos: {
         trailer: {
-          key: "dQw4w9WgXcQ",
-          name: "Official Trailer",
+          key: "hylIXfZeB4c",
+          name: "Amaran Official Trailer",
           site: "YouTube",
         },
       },
     },
   },
   {
-    title: "Echoes of the Deep",
-    originalTitle: "Echoes of the Deep",
-    subtitle: "Terror in the Abyss",
+    title: "Vettaiyan",
+    originalTitle: "வேட்டையன்",
+    subtitle: "The Hunter",
     description:
-      "A marine research crew stationed in a deep-sea benthic trench discovers an ancient bioluminescent biosphere that harbors creatures far older than mankind.",
-    runtime: 126,
+      "SP Athiyan IPS, a celebrated senior police officer renowned for eliminating violent offenders through swift encounters, confronts a moral and legal crisis when an encounter in a sensitive government school case uncovers a nationwide education scam overseen by a corrupt corporate magnate.",
+    runtime: 163,
+    is3D: false,
+    startdate: new Date("2024-10-10"),
+    release: {
+      productionCountry: "IN",
+      productionYear: 2024,
+      ageRestriction: 12,
+    },
+    genres: ["Action", "Drama", "Crime"],
+    keywords: ["police", "encounter", "justice", "investigation", "human rights"],
+    credits: {
+      crew: {
+        director: { name: "T. J. Gnanavel" },
+        screenwriter: { name: "T. J. Gnanavel" },
+      },
+      cast: [
+        {
+          name: "Rajinikanth",
+          roleName: "SP Athiyan IPS",
+          img: "https://upload.wikimedia.org/wikipedia/commons/b/b3/Rajinikanth_in_2024.jpg",
+        },
+        {
+          name: "Amitabh Bachchan",
+          roleName: "DGP Sathyadev Bramhadutt Sharma",
+          img: "https://upload.wikimedia.org/wikipedia/commons/9/9a/Amitabh_Bachchan_in_2015.jpg",
+        },
+        {
+          name: "Fahadh Faasil",
+          roleName: "Patrick / Battery",
+          img: "https://upload.wikimedia.org/wikipedia/commons/8/87/Fahadh_Faasil_at_50th_IFFI_2019.jpg",
+        },
+        {
+          name: "Rana Daggubati",
+          roleName: "Natraj",
+          img: "https://upload.wikimedia.org/wikipedia/commons/1/1a/Rana_Daggubati_at_60th_Filmfare_Awards_South.jpg",
+        },
+      ],
+    },
+    media: {
+      images: {
+        poster:
+          "https://upload.wikimedia.org/wikipedia/en/6/68/Vettaiyan_poster.jpg",
+      },
+      videos: {
+        trailer: {
+          key: "eP3kF1iUfGg",
+          name: "Vettaiyan Official Prevue",
+          site: "YouTube",
+        },
+      },
+    },
+  },
+  {
+    title: "Maharaja",
+    originalTitle: "மகாராஜா",
+    subtitle: "Revenge Has a New Address",
+    description:
+      "A quiet, solitary barber in Chennai arrives at a police station reporting that his metal dustbin named 'Lakshmi' has been stolen from his home. As indifferent police officers mock his insistence on finding the dustbin, a harrowing non-linear tale of calculated vengeance and justice comes to light.",
+    runtime: 140,
+    is3D: false,
+    startdate: new Date("2024-06-14"),
+    release: {
+      productionCountry: "IN",
+      productionYear: 2024,
+      ageRestriction: 16,
+    },
+    genres: ["Action", "Crime", "Drama", "Thriller"],
+    keywords: ["non-linear", "revenge", "police station", "barber", "father"],
+    credits: {
+      crew: {
+        director: { name: "Nithilan Saminathan" },
+        screenwriter: { name: "Nithilan Saminathan" },
+      },
+      cast: [
+        {
+          name: "Vijay Sethupathi",
+          roleName: "Maharaja",
+          img: "https://upload.wikimedia.org/wikipedia/commons/1/11/Vijay_Sethupathi_at_the_60th_Britannia_Filmfare_Awards_South_2013.jpg",
+        },
+        {
+          name: "Anurag Kashyap",
+          roleName: "Selvam",
+          img: "https://upload.wikimedia.org/wikipedia/commons/8/85/Anurag_Kashyap_at_68th_Cannes_Film_Festival.jpg",
+        },
+        {
+          name: "Mamta Mohandas",
+          roleName: "Aasifa",
+          img: "https://upload.wikimedia.org/wikipedia/commons/f/fc/Mamta_Mohandas_at_60th_Filmfare_Awards_South.jpg",
+        },
+        {
+          name: "Natarajan Subramaniam",
+          roleName: "Inspector S. Varadhan",
+          img: "https://upload.wikimedia.org/wikipedia/commons/2/23/Natty_Subramaniam_at_Sathuranga_Vettai_Press_Meet.jpg",
+        },
+      ],
+    },
+    media: {
+      images: {
+        poster:
+          "https://upload.wikimedia.org/wikipedia/en/8/82/Maharaja_2024_film_poster.jpg",
+      },
+      videos: {
+        trailer: {
+          key: "r_0_q_Vj_0s",
+          name: "Maharaja Official Trailer",
+          site: "YouTube",
+        },
+      },
+    },
+  },
+  {
+    title: "Kanguva",
+    originalTitle: "கங்குவா",
+    subtitle: "A Mighty Valiant Saga",
+    description:
+      "A centuries-spanning fantasy adventure connecting a modern bounty hunter operating in Goa to Kanguva, a fearless tribal chieftain of ancient Perumachi who risked everything to protect an orphaned boy from the brutal invasion of the Arathi clan.",
+    runtime: 154,
     is3D: true,
-    startdate: new Date(),
+    startdate: new Date("2024-11-14"),
     release: {
-      productionCountry: "US",
+      productionCountry: "IN",
       productionYear: 2024,
-      ageRestriction: 16,
+      ageRestriction: 12,
     },
-    genres: ["Sci-Fi", "Thriller", "Horror"],
-    keywords: ["ocean", "submarine", "abyss", "creature"],
+    genres: ["Action", "Fantasy", "Period Drama"],
+    keywords: ["reincarnation", "tribal warrior", "ancient island", "sword", "epic"],
     credits: {
       crew: {
-        director: { name: "Teresa Morales" },
-        screenwriter: { name: "Kevin Zhang" },
+        director: { name: "Siva" },
+        screenwriter: { name: "Siva" },
       },
       cast: [
         {
-          name: "Rachel Chen",
-          roleName: "Dr. Evelyn Drake",
-          img: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300",
+          name: "Suriya",
+          roleName: "Kanguva / Francis Theodore",
+          img: "https://upload.wikimedia.org/wikipedia/commons/4/4c/Suriya_at_60th_Filmfare_Awards_South.jpg",
         },
         {
-          name: "Gabriel Soto",
-          roleName: "Pilot Mateo Diaz",
-          img: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=300",
+          name: "Bobby Deol",
+          roleName: "Udhiran",
+          img: "https://upload.wikimedia.org/wikipedia/commons/b/b5/Bobby_Deol_at_Star_Guild_Awards.jpg",
+        },
+        {
+          name: "Disha Patani",
+          roleName: "Angela",
+          img: "https://upload.wikimedia.org/wikipedia/commons/4/42/Disha_Patani_at_GQ_Men_of_the_Year_Awards_2018.jpg",
+        },
+        {
+          name: "Yogi Babu",
+          roleName: "Colt 95",
+          img: "https://upload.wikimedia.org/wikipedia/commons/8/86/Yogi_Babu_at_Pariyerum_Perumal_Press_Meet.jpg",
         },
       ],
     },
     media: {
       images: {
         poster:
-          "https://images.unsplash.com/photo-1682687220063-4742bd7fd538?w=800&q=80",
+          "https://upload.wikimedia.org/wikipedia/en/e/e8/Kanguva_poster.jpg",
       },
       videos: {
         trailer: {
-          key: "dQw4w9WgXcQ",
-          name: "Official Trailer",
+          key: "ajnms4p9jG0",
+          name: "Kanguva Official Trailer",
           site: "YouTube",
         },
       },
     },
   },
   {
-    title: "Neon Mirage",
-    originalTitle: "Neon Mirage",
-    subtitle: "Grid Runner 2099",
+    title: "Raayan",
+    originalTitle: "ராயன்",
+    subtitle: "Blood Is Thicker Than Water",
     description:
-      "In a rain-slicked metropolis dominated by synthetic memory conglomerates, an unlicensed data courier must smuggle a sentient AI algorithm before rival syndicates wipe her consciousness.",
-    runtime: 112,
+      "Kathavaraayan 'Raayan', a gentle fast-food cook who raised his two younger brothers and sister following parental desertion in North Chennai, finds his quiet life shattered when a territorial feud drags his family into a lethal war between two ruthless crime syndicates.",
+    runtime: 145,
     is3D: false,
-    startdate: new Date(),
+    startdate: new Date("2024-07-26"),
     release: {
-      productionCountry: "JP",
+      productionCountry: "IN",
       productionYear: 2024,
-      ageRestriction: 16,
-    },
-    genres: ["Action", "Sci-Fi", "Crime"],
-    keywords: ["cyberpunk", "neon", "ai", "hacker"],
-    credits: {
-      crew: {
-        director: { name: "Kenji Takahashi" },
-        screenwriter: { name: "Yuki Sato" },
-      },
-      cast: [
-        {
-          name: "Hana Kuroda",
-          roleName: "Ren Tanaka",
-          img: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300",
-        },
-        {
-          name: "Viktor Petrov",
-          roleName: "Nikolai",
-          img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300",
-        },
-      ],
-    },
-    media: {
-      images: {
-        poster:
-          "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=800&q=80",
-      },
-      videos: {
-        trailer: {
-          key: "dQw4w9WgXcQ",
-          name: "Official Trailer",
-          site: "YouTube",
-        },
-      },
-    },
-  },
-  {
-    title: "Whispering Pines",
-    originalTitle: "Whispering Pines",
-    subtitle: "Some Woods Never Forget",
-    description:
-      "A naturalist documenting vanishing folklore in an isolated Appalachian valley encounters a tight-knit mountain town protecting a terrifying pact made with the ancient forest.",
-    runtime: 105,
-    is3D: false,
-    startdate: new Date(),
-    release: {
-      productionCountry: "US",
-      productionYear: 2023,
       ageRestriction: 18,
     },
-    genres: ["Horror", "Mystery", "Drama"],
-    keywords: ["forest", "folklore", "isolation", "pact"],
+    genres: ["Action", "Crime", "Drama"],
+    keywords: ["north chennai", "gang war", "siblings", "revenge", "underworld"],
     credits: {
       crew: {
-        director: { name: "Hannah Brooks" },
-        screenwriter: { name: "Samuel Ortiz" },
+        director: { name: "Dhanush" },
+        screenwriter: { name: "Dhanush" },
       },
       cast: [
         {
-          name: "Lucas Miller",
-          roleName: "Tom Walker",
-          img: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=300",
+          name: "Dhanush",
+          roleName: "Kathavaraayan 'Raayan'",
+          img: "https://upload.wikimedia.org/wikipedia/commons/a/af/Dhanush_at_60th_Filmfare_Awards_South.jpg",
         },
         {
-          name: "Eliza Thorn",
-          roleName: "Nora Calloway",
-          img: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=300",
+          name: "S. J. Suryah",
+          roleName: "Sethuraman",
+          img: "https://upload.wikimedia.org/wikipedia/commons/7/7b/SJ_Suryah_at_Spyder_Press_Meet.jpg",
+        },
+        {
+          name: "Prakash Raj",
+          roleName: "Commissioner Sargunam",
+          img: "https://upload.wikimedia.org/wikipedia/commons/1/1d/Prakash_Raj_at_60th_Filmfare_Awards_South.jpg",
+        },
+        {
+          name: "Selvaraghavan",
+          roleName: "Sekar",
+          img: "https://upload.wikimedia.org/wikipedia/commons/9/91/Selvaraghavan_at_NGK_Audio_Launch.jpg",
         },
       ],
     },
     media: {
       images: {
         poster:
-          "https://images.unsplash.com/photo-1448375240586-882707db888b?w=800&q=80",
+          "https://upload.wikimedia.org/wikipedia/en/e/e4/Raayan_poster.jpg",
       },
       videos: {
         trailer: {
-          key: "dQw4w9WgXcQ",
-          name: "Official Trailer",
+          key: "qQJJkhhyMxs",
+          name: "Raayan Official Trailer",
           site: "YouTube",
         },
       },
     },
   },
   {
-    title: "The Quantum Paradox",
-    originalTitle: "The Quantum Paradox",
-    subtitle: "Every Choice Splits Reality",
+    title: "Ponniyin Selvan: Part Two",
+    originalTitle: "பொன்னியின் செல்வன் 2",
+    subtitle: "The Chola Dynasty Epic",
     description:
-      "Two rival quantum physicists inadvertently activate a temporal loop during an experimental collider test, finding themselves pursued by alternate versions of their own research team.",
-    runtime: 135,
+      "Arunmozhi Varman survives drowning at sea and returns to Thanjavur amid escalating court conspiracies, while Queen Nandini orchestrates the assassination of Crown Prince Aditha Karikalan to exact revenge for the slaying of Pandya King Veerapandiyan.",
+    runtime: 164,
     is3D: false,
-    startdate: new Date(),
+    startdate: new Date("2023-04-28"),
     release: {
-      productionCountry: "CA",
-      productionYear: 2024,
+      productionCountry: "IN",
+      productionYear: 2023,
       ageRestriction: 12,
     },
-    genres: ["Sci-Fi", "Thriller"],
-    keywords: ["quantum", "multiverse", "time-loop", "physics"],
+    genres: ["Action", "Adventure", "Drama", "History"],
+    keywords: ["chola dynasty", "kalki", "historical fiction", "royal intrigue", "empire"],
     credits: {
       crew: {
-        director: { name: "Arjun Patel" },
-        screenwriter: { name: "Claire Dubois" },
+        director: { name: "Mani Ratnam" },
+        screenwriter: { name: "Mani Ratnam" },
       },
       cast: [
         {
-          name: "Naveen Rao",
-          roleName: "Dr. Kavi Sharma",
-          img: "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=300",
+          name: "Vikram",
+          roleName: "Aditha Karikalan",
+          img: "https://upload.wikimedia.org/wikipedia/commons/9/9a/Chiyaan_Vikram_at_60th_Filmfare_Awards_South.jpg",
         },
         {
-          name: "Emily Watson",
-          roleName: "Dr. Laura Bailey",
-          img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300",
+          name: "Aishwarya Rai Bachchan",
+          roleName: "Nandini / Mandakini Devi",
+          img: "https://upload.wikimedia.org/wikipedia/commons/3/3a/Aishwarya_Rai_Cannes_2017.jpg",
+        },
+        {
+          name: "Jayam Ravi",
+          roleName: "Arunmozhi Varman (Ponniyin Selvan)",
+          img: "https://upload.wikimedia.org/wikipedia/commons/0/07/Jayam_Ravi_at_60th_Filmfare_Awards_South.jpg",
+        },
+        {
+          name: "Karthi",
+          roleName: "Vallavaraiyan Vandiyadevan",
+          img: "https://upload.wikimedia.org/wikipedia/commons/8/87/Karthi_at_60th_Filmfare_Awards_South.jpg",
         },
       ],
     },
     media: {
       images: {
         poster:
-          "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&q=80",
+          "https://upload.wikimedia.org/wikipedia/en/5/5e/Ponniyin_Selvan_II.jpg",
       },
       videos: {
         trailer: {
-          key: "dQw4w9WgXcQ",
-          name: "Official Trailer",
+          key: "mH_C07jHq8M",
+          name: "PS-2 Official Trailer",
           site: "YouTube",
         },
       },
     },
   },
   {
-    title: "Chronicles of the Wind",
-    originalTitle: "Chronicles of the Wind",
-    subtitle: "Skyward Voyage",
+    title: "Captain Miller",
+    originalTitle: "கேப்டன் மில்லர்",
+    subtitle: "Fear None, Conquer All",
     description:
-      "In an airborne world of floating archipelagos, an intrepid young cartographer builds a solar glider to chart the mythic Sky Sea and restore balance to the seasonal tempest currents.",
-    runtime: 98,
-    is3D: true,
-    startdate: new Date(),
+      "In the 1930s during the British Raj, a disillusioned former British Indian Army soldier named Analeesan witnesses colonial atrocities against innocent villagers. Rebellious and driven by a thirst for freedom, he assumes the moniker Captain Miller to wage guerilla warfare against colonial oppressors.",
+    runtime: 157,
+    is3D: false,
+    startdate: new Date("2024-01-12"),
     release: {
-      productionCountry: "FR",
-      productionYear: 2023,
-      ageRestriction: 6,
+      productionCountry: "IN",
+      productionYear: 2024,
+      ageRestriction: 16,
     },
-    genres: ["Animation", "Adventure", "Family"],
-    keywords: ["sky", "airship", "adventure", "clouds"],
+    genres: ["Action", "Adventure", "Period Drama"],
+    keywords: ["british raj", "rebellion", "historical action", "freedom fighter", "outlaw"],
     credits: {
       crew: {
-        director: { name: "Lucian Moreau" },
-        screenwriter: { name: "Amelie Laurent" },
+        director: { name: "Arun Matheswaran" },
+        screenwriter: { name: "Arun Matheswaran" },
       },
       cast: [
         {
-          name: "Julien Benoit",
-          roleName: "Leo (Voice)",
-          img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300",
+          name: "Dhanush",
+          roleName: "Analeesan 'Eesa' / Captain Miller",
+          img: "https://upload.wikimedia.org/wikipedia/commons/a/af/Dhanush_at_60th_Filmfare_Awards_South.jpg",
         },
         {
-          name: "Chloe Dupont",
-          roleName: "Zephyr (Voice)",
-          img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300",
+          name: "Shiva Rajkumar",
+          roleName: "Sengolan",
+          img: "https://upload.wikimedia.org/wikipedia/commons/d/d4/Shiva_Rajkumar_at_60th_Filmfare_Awards_South.jpg",
+        },
+        {
+          name: "Priyanka Arul Mohan",
+          roleName: "Velmathi",
+          img: "https://upload.wikimedia.org/wikipedia/commons/4/4b/Priyanka_Arul_Mohan_at_Doctor_Pre-Release_Event.jpg",
+        },
+        {
+          name: "Sundeep Kishan",
+          roleName: "Captain Rafi",
+          img: "https://upload.wikimedia.org/wikipedia/commons/2/2c/Sundeep_Kishan_at_Venkatadri_Express_Audio_Launch.jpg",
         },
       ],
     },
     media: {
       images: {
         poster:
-          "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800&q=80",
+          "https://upload.wikimedia.org/wikipedia/en/1/1c/Captain_Miller_film_poster.jpg",
       },
       videos: {
         trailer: {
-          key: "dQw4w9WgXcQ",
-          name: "Official Trailer",
+          key: "ujhW6TohxY8",
+          name: "Captain Miller Official Trailer",
           site: "YouTube",
         },
       },
@@ -410,7 +606,9 @@ async function seed() {
     console.log("MongoDB connected successfully.");
   } catch (err) {
     console.error("Database connection failed:", err.message);
-    console.error("Please verify that your public IP address is whitelisted in MongoDB Atlas Network Access.");
+    console.error(
+      "Please verify that your public IP address is whitelisted in MongoDB Atlas Network Access."
+    );
     process.exit(1);
   }
 
@@ -421,7 +619,7 @@ async function seed() {
     if (!standardSeatType) {
       standardSeatType = await SeatType.create({
         title: "Standard",
-        price: 12,
+        price: 150,
         colorHEX: "#3b82f6",
       });
       console.log("Created 'Standard' seat type.");
@@ -431,7 +629,7 @@ async function seed() {
     if (!premiumSeatType) {
       premiumSeatType = await SeatType.create({
         title: "Premium",
-        price: 16,
+        price: 220,
         colorHEX: "#eab308",
       });
       console.log("Created 'Premium' seat type.");
@@ -457,16 +655,36 @@ async function seed() {
         rows.push(row);
       }
       cinema = await Cinema.create({
-        title: "Starlight Grand Hall",
+        title: "Mayajaal Multiplex Screen 1",
         map: { rows },
       });
-      console.log("Created 'Starlight Grand Hall' cinema.");
+      console.log("Created 'Mayajaal Multiplex Screen 1' cinema.");
     } else {
       console.log(`Using existing cinema: ${cinema.title}`);
     }
 
-    // 3. Upsert Sample Movies (Repeatable & Safe)
-    console.log("\nUpserting 8 sample movies...");
+    // Clean up previously created fictional sample movies if present
+    const fictionalTitles = [
+      "Starlight Odyssey",
+      "Shadows of the Citadel",
+      "The Clockwork Detective",
+      "Echoes of the Deep",
+      "Neon Mirage",
+      "Whispering Pines",
+      "The Quantum Paradox",
+      "Chronicles of the Wind",
+    ];
+    for (const fTitle of fictionalTitles) {
+      const fMovie = await Movie.findOne({ title: fTitle });
+      if (fMovie) {
+        await ScheduledScreening.deleteMany({ movie: fMovie._id });
+        await Movie.findByIdAndDelete(fMovie._id);
+        console.log(`  Removed old sample movie: ${fTitle}`);
+      }
+    }
+
+    // 3. Upsert 10 Tamil Movies (Repeatable & Safe)
+    console.log("\nUpserting 10 latest Tamil movies...");
     const weekdays = [
       "Monday",
       "Tuesday",
@@ -477,14 +695,14 @@ async function seed() {
       "Sunday",
     ];
 
-    for (let i = 0; i < sampleMovies.length; i++) {
-      const movieData = sampleMovies[i];
+    for (let i = 0; i < tamilMovies.length; i++) {
+      const movieData = tamilMovies[i];
       const savedMovie = await Movie.findOneAndUpdate(
         { title: movieData.title },
         movieData,
         { upsert: true, new: true, setDefaultsOnInsert: true }
       );
-      console.log(`  [OK] ${savedMovie.title} (${savedMovie.genres.join(", ")})`);
+      console.log(`  [OK] ${savedMovie.title} (${savedMovie.originalTitle}) - ${savedMovie.genres.join(", ")}`);
 
       // Ensure at least 2 scheduled screenings per movie
       const existingScreenings = await ScheduledScreening.find({
@@ -492,25 +710,24 @@ async function seed() {
       });
 
       if (existingScreenings.length === 0) {
-        // Assign screenings across weekdays
         const day1 = weekdays[i % 7];
         const day2 = weekdays[(i + 3) % 7];
 
         await ScheduledScreening.create([
           {
             weekday: day1,
-            time: "17:30",
+            time: "14:30",
             movie: savedMovie._id,
             cinema: cinema._id,
           },
           {
             weekday: day2,
-            time: "20:45",
+            time: "18:45",
             movie: savedMovie._id,
             cinema: cinema._id,
           },
         ]);
-        console.log(`    -> Added screenings for ${day1} 17:30 & ${day2} 20:45`);
+        console.log(`    -> Added screenings for ${day1} 14:30 & ${day2} 18:45`);
       }
     }
 

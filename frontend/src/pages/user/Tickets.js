@@ -18,18 +18,19 @@ const Tickets = (props) => {
     fetch.get(`${BACKEND_URL}/tickets`).then(async (res) => {
       if (res.status !== 200) return;
       setTickets(
-        res.data
-          .map((ticket, i) => ({
+        (res.data || [])
+          .filter((ticket) => ticket && ticket.screening?.scheduledScreening)
+          .map((ticket) => ({
             id: ticket._id,
             datetime: ticket.datetime,
             codeSVG: ticket.codeSVG,
             customer: ticket.customer,
             seats: ticket.seats,
-            cinema: ticket.screening.scheduledScreening.cinema.title,
+            cinema: ticket.screening?.scheduledScreening?.cinema?.title || "Cinema",
             movie: {
-              title: ticket.screening.scheduledScreening.movie.title,
+              title: ticket.screening?.scheduledScreening?.movie?.title || "Movie",
               poster:
-                ticket.screening.scheduledScreening.movie.media.images.poster,
+                ticket.screening?.scheduledScreening?.movie?.media?.images?.poster || "",
             },
             checked: ticket.checked,
           }))

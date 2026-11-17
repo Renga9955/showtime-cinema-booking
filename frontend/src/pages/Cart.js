@@ -67,8 +67,16 @@ const Cart = (props) => {
 
   const paymentHandler = () => {
     const customer = isLoggedIn
-      ? { name: `${user.firstName} ${user.lastName}`, email: user.email }
-      : { name: `${guestFirstName} ${guestLastName}`, email: guestMail };
+      ? {
+          name:
+            `${user?.firstName || ""} ${user?.lastName || ""}`.trim() ||
+            user?.username,
+          email: user?.email,
+        }
+      : {
+          name: `${guestFirstName} ${guestLastName}`.trim(),
+          email: guestMail,
+        };
     setCart((oldCart) => ({ ...oldCart, customer }));
     setShowPaymentModal(true);
   };
@@ -214,7 +222,26 @@ const Cart = (props) => {
       </Container>
       <PaymentModal
         show={showPaymentModal}
-        cart={cart}
+        cart={
+          cart
+            ? {
+                ...cart,
+                customer:
+                  cart.customer ||
+                  (isLoggedIn
+                    ? {
+                        name:
+                          `${user?.firstName || "" } ${user?.lastName || ""}`.trim() ||
+                          user?.username,
+                        email: user?.email,
+                      }
+                    : {
+                        name: `${guestFirstName} ${guestLastName}`.trim(),
+                        email: guestMail,
+                      }),
+              }
+            : null
+        }
         onClose={() => setShowPaymentModal(false)}
       />
     </>

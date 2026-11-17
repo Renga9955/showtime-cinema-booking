@@ -15,7 +15,9 @@ router.get("/", auth, async (req, res) => {
   const user = req.user;
   console.log(`GET /tickets`);
   try {
-    const userFound = await User.findOne({ email: user.email })
+    const userFound = await User.findOne({
+      email: { $regex: new RegExp("^" + user.email + "$", "i") },
+    })
       .populate("tickets")
       .populate({ path: "tickets", populate: { path: "screening" } })
       .populate({ path: "tickets", populate: { path: "seats.type" } })
@@ -44,7 +46,8 @@ router.get("/", auth, async (req, res) => {
         },
       });
 
-    res.status(200).json({ data: userFound.tickets });
+    if (!userFound) return res.status(200).json({ data: [] });
+    res.status(200).json({ data: userFound.tickets || [] });
   } catch (err) {
     console.log(err);
     res.sendStatus(400);

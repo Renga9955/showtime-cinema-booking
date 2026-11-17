@@ -42,6 +42,7 @@ const MovieListItem = ({ movie }) => {
                 className={styles.posterImg}
                 onError={() => setImageError(true)}
                 loading="lazy"
+                referrerPolicy="no-referrer"
               />
             ) : (
               <div className={styles.posterPlaceholder}>

@@ -7,7 +7,7 @@ const PosterWeekCnt = ({ src, startdate, className }) => {
 
   return (
     <div className={classes}>
-      <Image src={src} className={styles.cover} />
+      <Image src={src} className={styles.cover} referrerPolicy="no-referrer" />
       <p className={styles.weeks}>Week {getWeekCounter(startdate)}</p>
     </div>
   );
